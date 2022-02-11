@@ -3,7 +3,7 @@ import os
 from pygame.constants import K_ESCAPE
 from PlayableCharacter import PlayableCharacter
 from Enemy import Enemy
-import map
+from map import tile_map
 
 pygame.init()
 
