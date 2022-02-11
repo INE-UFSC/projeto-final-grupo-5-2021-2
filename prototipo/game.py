@@ -4,6 +4,7 @@ from pygame.constants import K_ESCAPE
 from PlayableCharacter import PlayableCharacter
 from Enemy import Enemy
 from map import tile_map
+from Bullet import bullet_group
 
 pygame.init()
 
@@ -32,11 +33,6 @@ def draw_map(current_map):
                 pygame.draw.rect(screen, BROWN, rect)
     
 
-#create sprite groups
-bullet_group = pygame.sprite.Group()
-
-
-
 player = PlayableCharacter('player', 200, 200, 3, 5, 20)
 enemy = Enemy('enemy', 400, 200, 3, 5, 20, 20)
 
@@ -55,13 +51,13 @@ while run:
     enemy.ai(player)
 
     #update and draw groups
-    bullet_group.update()
+    bullet_group.update(player, bullet_group, enemy)
     bullet_group.draw(screen)
 
     #update player actions
     if player.alive:
-        if player.shoot:
-            player.shoot()
+        if player.shooting:
+            player.shoot(bullet_group)
         if player.in_air:
             player.update_action(2)#2: jump
         elif player.moving_left or player.moving_right:
@@ -82,7 +78,7 @@ while run:
             if event.key == pygame.K_d:
                 player.moving_right = True
             if event.key == pygame.K_SPACE:
-                player. shoot = True
+                player.shooting = True
             if event.key == pygame.K_ESCAPE:
                 run = False
             if event.key == pygame.K_w and player.alive:
@@ -95,7 +91,7 @@ while run:
             if event.key == pygame.K_d:
                 player.moving_right = False
             if event.key == pygame.K_SPACE:
-                shoot = False
+                player.shooting = False
 
     pygame.display.update()
 

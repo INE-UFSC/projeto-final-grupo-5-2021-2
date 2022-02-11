@@ -3,6 +3,7 @@ import pygame
 from map import tile_map
 import random
 import os
+from Bullet import Bullet, bullet_group
 
 class Enemy:
     def __init__(self, char_type, x, y, scale, speed, ammo, grenades):
@@ -55,7 +56,8 @@ class Enemy:
             self.health = 0
             self.speed = 0
             self.alive = False
-            self.update_action(3)
+            img = pygame.image.load('assets/RebelSoldier_dead.png').convert_alpha()
+            self.image = pygame.transform.scale(img, (89, 77))
 
 
     def update(self):
@@ -63,14 +65,14 @@ class Enemy:
         #update cooldown
         if self.shoot_cooldown > 0:
             self.shoot_cooldown -= 1
-    """
-    def shoot(self):
+
+    def shoot(self, bullet_group):
         if self.shoot_cooldown == 0 and self.ammo > 0:
             self.shoot_cooldown = 20
-            bullet = Bullet(self.rect.centerx + (0.75 * self.rect.size[0] * self.direction), self.rect.centery, self.direction)
+            bullet = Bullet(self.rect.centerx + (0.6 * self.rect.size[0] * self.direction), self.rect.centery, self.direction)
+            bullet_group.add(bullet)
             #reduce ammo
             self.ammo -= 1
-    """
 
 
     def move(self, moving_left, moving_right):
@@ -122,7 +124,7 @@ class Enemy:
                 #stop running and face the player
                 self.update_action(0)#0: idle
                 #shoot
-                # self.shoot()
+                self.shoot(bullet_group)
             else:
                 if self.idling == False:
                     if self.direction == 1:

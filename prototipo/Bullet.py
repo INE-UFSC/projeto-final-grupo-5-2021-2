@@ -1,11 +1,10 @@
 import pygame
 
-from game import player, enemy, bullet_group
-
 #load images
 #bullet
-bullet_img = pygame.image.load('assets/img/icons/bullet.png').convert_alpha()
-
+bullet_img = pygame.image.load('assets/bullet.png')
+#create sprite groups
+bullet_group = pygame.sprite.Group()
 class Bullet(pygame.sprite.Sprite):
     def __init__(self, x, y, direction):
         pygame.sprite.Sprite.__init__(self)
@@ -15,14 +14,13 @@ class Bullet(pygame.sprite.Sprite):
         self.rect.center = (x, y)
         self.direction = direction
 
-    def update(self):
+    def update(self, player, bullet_group, enemy):
         #move bullet
         self.rect.x += (self.direction * self.speed)
         #check if bullet has gone off screen
         if self.rect.right < 0 or self.rect.left > 800:
             self.kill()
 
-        #check colision with characters
         if pygame.sprite.spritecollide(player, bullet_group, False):
             if player.alive:
                 player.health -= 5

@@ -1,4 +1,5 @@
 import pygame
+from Bullet import Bullet
 
 class PlayableCharacter(pygame.sprite.Sprite):
     def __init__(self, char_type, x, y, scale, speed, ammo):
@@ -24,7 +25,7 @@ class PlayableCharacter(pygame.sprite.Sprite):
         #player action variables
         self.moving_left = False
         self.moving_right = False
-        self.shoot = False
+        self.shooting = False
 
         #load all images for the players
         img = pygame.image.load('assets/marco_rossi.png').convert_alpha()
@@ -75,7 +76,7 @@ class PlayableCharacter(pygame.sprite.Sprite):
         self.rect.x += dx
         self.rect.y += dy
 
-    def shoot(self):
+    def shoot(self, bullet_group):
         if self.shoot_cooldown == 0 and self.ammo > 0:
             self.shoot_cooldown = 20
             bullet = Bullet(self.rect.centerx + (0.6 * self.rect.size[0] * self.direction), self.rect.centery, self.direction)
@@ -96,6 +97,8 @@ class PlayableCharacter(pygame.sprite.Sprite):
             self.health = 0
             self.speed = 0
             self.alive = False
+            img = pygame.image.load('assets/marco_rossi_dead.png').convert_alpha()
+            self.image = pygame.transform.scale(img, (75, 75))
             self.update_action(3)
 
     def draw(self, screen):
