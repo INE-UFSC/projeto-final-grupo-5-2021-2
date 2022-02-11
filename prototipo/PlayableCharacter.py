@@ -1,14 +1,18 @@
 import pygame
 from Bullet import Bullet
+from Grenade import Grenade
 
 class PlayableCharacter(pygame.sprite.Sprite):
-    def __init__(self, x, y, speed, ammo):
+    def __init__(self, x, y, speed, ammo, grenade):
         pygame.sprite.Sprite.__init__(self)
         self.alive = True
         self.speed = speed
         self.ammo = ammo
         self.start_ammo = ammo
+        self.grenade = grenade
+        self.start_grenade = grenade
         self.shoot_cooldown = 0
+        self.grenade_thrown = False
         self.health = 100
         self.max_health = self.health
         self.direction = 1
@@ -21,6 +25,7 @@ class PlayableCharacter(pygame.sprite.Sprite):
         self.moving_left = False
         self.moving_right = False
         self.shooting = False
+        self.throwing = False
 
         #load all images for the players
         img = pygame.image.load('assets/marco_rossi.png').convert_alpha()
@@ -77,6 +82,15 @@ class PlayableCharacter(pygame.sprite.Sprite):
             bullet_group.add(bullet)
             #reduce ammo
             self.ammo -= 1
+
+    def throw_grenade(self, grenade_group):
+        if self.grenade_thrown is False and self.grenade > 0:
+            self.grenade_thrown = True
+            grenade = Grenade(self.rect.centerx + (0.6 * self.rect.size[0] * self.direction),
+                              self.rect.top, self.direction)
+            grenade_group.add(grenade)
+            #reduce grenade
+            self.grenade -= 1
 
     def check_alive(self):
         if self.health <= 0:

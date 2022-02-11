@@ -3,14 +3,13 @@ import random
 from Bullet import Bullet, bullet_group
 
 class Enemy:
-    def __init__(self, x, y, speed, ammo, grenades):
+    def __init__(self, x, y, speed, ammo):
             pygame.sprite.Sprite.__init__(self)
             self.alive = True
             self.speed = speed
             self.ammo = ammo
             self.start_ammo = ammo
             self.shoot_cooldown = 0
-            self.grenades = grenades
             self.health = 100
             self.max_health = self.health
             self.direction = 1

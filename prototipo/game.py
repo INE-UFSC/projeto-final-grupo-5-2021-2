@@ -3,13 +3,14 @@ from PlayableCharacter import PlayableCharacter
 from Enemy import Enemy
 from map import tile_map
 from Bullet import bullet_group
+from Grenade import grenade_group, explosion_group
 
 pygame.init()
 
 screen = pygame.display.set_mode((800, 600))
 pygame.display.set_caption('Metal Slug')
 
-#set FPS
+#set FPSd
 clock = pygame.time.Clock()
 FPS = 60
 
@@ -31,8 +32,8 @@ def draw_map(current_map):
                 pygame.draw.rect(screen, BROWN, rect)
     
 
-player = PlayableCharacter(200, 200, 5, 20)
-enemy = Enemy(400, 200, 5, 20, 20)
+player = PlayableCharacter(200, 200, 5, 20, 5)
+enemy = Enemy(400, 200, 5, 20)
 
 run = True
 while run:
@@ -51,11 +52,17 @@ while run:
     #update and draw groups
     bullet_group.update(player, bullet_group, enemy)
     bullet_group.draw(screen)
+    grenade_group.update(player, grenade_group, enemy)
+    grenade_group.draw(screen)
+    explosion_group.update(player, explosion_group, enemy)
+    explosion_group.draw(screen)
 
     #update player actions
     if player.alive:
         if player.shooting:
             player.shoot(bullet_group)
+        elif player.throwing:
+            player.throw_grenade(grenade_group)
         player.move()
 
     for event in pygame.event.get():
@@ -71,6 +78,8 @@ while run:
                 player.moving_right = True
             if event.key == pygame.K_SPACE:
                 player.shooting = True
+            if event.key == pygame.K_q:
+                player.throwing = True
             if event.key == pygame.K_ESCAPE:
                 run = False
             if event.key == pygame.K_w and player.alive:
@@ -84,6 +93,9 @@ while run:
                 player.moving_right = False
             if event.key == pygame.K_SPACE:
                 player.shooting = False
+            if event.key == pygame.K_q:
+                player.throwing = False
+                player.grenade_thrown = False
 
     pygame.display.update()
 
