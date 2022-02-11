@@ -2,10 +2,9 @@ import pygame
 from Bullet import Bullet
 
 class PlayableCharacter(pygame.sprite.Sprite):
-    def __init__(self, char_type, x, y, scale, speed, ammo):
+    def __init__(self, x, y, speed, ammo):
         pygame.sprite.Sprite.__init__(self)
         self.alive = True
-        self.char_type = char_type
         self.speed = speed
         self.ammo = ammo
         self.start_ammo = ammo
@@ -17,10 +16,6 @@ class PlayableCharacter(pygame.sprite.Sprite):
         self.jump = False
         self.in_air = True
         self.flip = False
-        self.animation_list = []
-        self.frame_index = 0
-        self.action = 0
-        self.update_time = pygame.time.get_ticks()
 
         #player action variables
         self.moving_left = False
@@ -34,7 +29,6 @@ class PlayableCharacter(pygame.sprite.Sprite):
         self.rect.center = (x, y)
 
     def update(self):
-        #'self.update_animation'
         self.check_alive()
         #update cooldown
         if self.shoot_cooldown > 0:
@@ -84,14 +78,6 @@ class PlayableCharacter(pygame.sprite.Sprite):
             #reduce ammo
             self.ammo -= 1
 
-    def update_action(self, new_action):
-        #check if the new action is different to the previous one
-        if new_action != self.action:
-            self.action = new_action
-
-        #update the animation settings
-            self.frame_index = 0
-            self.update_time = pygame.time.get_ticks()
     def check_alive(self):
         if self.health <= 0:
             self.health = 0
@@ -99,7 +85,6 @@ class PlayableCharacter(pygame.sprite.Sprite):
             self.alive = False
             img = pygame.image.load('assets/marco_rossi_dead.png').convert_alpha()
             self.image = pygame.transform.scale(img, (75, 75))
-            self.update_action(3)
 
     def draw(self, screen):
         screen.blit(pygame.transform.flip(self.image, self.flip, False), self.rect)

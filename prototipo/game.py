@@ -1,6 +1,4 @@
 import pygame
-import os
-from pygame.constants import K_ESCAPE
 from PlayableCharacter import PlayableCharacter
 from Enemy import Enemy
 from map import tile_map
@@ -11,7 +9,7 @@ pygame.init()
 screen = pygame.display.set_mode((800, 600))
 pygame.display.set_caption('Metal Slug')
 
-#set framerate
+#set FPS
 clock = pygame.time.Clock()
 FPS = 60
 
@@ -33,8 +31,8 @@ def draw_map(current_map):
                 pygame.draw.rect(screen, BROWN, rect)
     
 
-player = PlayableCharacter('player', 200, 200, 3, 5, 20)
-enemy = Enemy('enemy', 400, 200, 3, 5, 20, 20)
+player = PlayableCharacter(200, 200, 5, 20)
+enemy = Enemy(400, 200, 5, 20, 20)
 
 run = True
 while run:
@@ -58,12 +56,6 @@ while run:
     if player.alive:
         if player.shooting:
             player.shoot(bullet_group)
-        if player.in_air:
-            player.update_action(2)#2: jump
-        elif player.moving_left or player.moving_right:
-            player.update_action(1)#1: run
-        else:
-            player.update_action(0)#0: idle
         player.move()
 
     for event in pygame.event.get():
