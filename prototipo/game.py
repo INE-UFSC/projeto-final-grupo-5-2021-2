@@ -1,0 +1,93 @@
+import pygame
+import os
+from pygame.constants import K_ESCAPE
+from PlayableCharacter import PlayableCharacter
+
+pygame.init()
+
+screen = pygame.display.set_mode((800, 600))
+pygame.display.set_caption('Metal Slug')
+
+#set framerate
+clock = pygame.time.Clock()
+FPS = 60
+
+#game variables
+gravity = 0.75
+
+#define colors
+BG = (144, 201, 120)
+RED = (255, 0, 0)
+
+def draw_bg():
+    screen.fill(BG)
+    pygame.draw.line(screen, RED, (0, 300), (800, 300)) 
+
+
+#create sprite groups
+bullet_group = pygame.sprite.Group()
+
+
+
+player = PlayableCharacter('player', 200, 200, 3, 5, 20)
+enemy = PlayableCharacter('enemy', 400, 200, 3, 5, 20)
+
+run = True
+while run:
+
+    clock.tick(FPS)
+
+    draw_bg()
+
+    player.update()
+    player.draw(screen)
+
+    enemy.update()
+    enemy.draw(screen)
+
+    #update and draw groups
+    bullet_group.update()
+    bullet_group.draw(screen)
+
+    #update player actions
+    if player.alive:
+        if player.shoot:
+            player.shoot()
+        if player.in_air:
+            player.update_action(2)#2: jump
+        elif player.moving_left or player.moving_right:
+            player.update_action(1)#1: run
+        else:
+            player.update_action(0)#0: idle
+        player.move()
+
+    for event in pygame.event.get():
+        #quit game
+        if event.type == pygame.QUIT:
+            run = False
+
+        #keyboard presses
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_a:
+                player.moving_left = True
+            if event.key == pygame.K_d:
+                player.moving_right = True
+            if event.key == pygame.K_SPACE:
+                player. shoot = True
+            if event.key == pygame.K_ESCAPE:
+                run = False
+            if event.key == pygame.K_w and player.alive:
+                player.jump = True
+
+        #keyboard button released
+        if event.type == pygame.KEYUP:
+            if event.key == pygame.K_a:
+                player.moving_left = False
+            if event.key == pygame.K_d:
+                player.moving_right = False
+            if event.key == pygame.K_SPACE:
+                shoot = False
+
+    pygame.display.update()
+
+pygame.quit()
