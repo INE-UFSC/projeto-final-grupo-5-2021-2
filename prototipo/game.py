@@ -2,6 +2,8 @@ import pygame
 import os
 from pygame.constants import K_ESCAPE
 from PlayableCharacter import PlayableCharacter
+from Enemy import Enemy
+import map
 
 pygame.init()
 
@@ -18,11 +20,17 @@ gravity = 0.75
 #define colors
 BG = (144, 201, 120)
 RED = (255, 0, 0)
+BROWN = (110, 38, 14)
 
-def draw_bg():
+def draw_map(current_map):
     screen.fill(BG)
-    pygame.draw.line(screen, RED, (0, 300), (800, 300)) 
-
+    
+    for y in range(len(current_map)):
+        for x in range(len(current_map[y])):
+            if current_map[y][x] == 'X':
+                rect = pygame.Rect(x*50, y*50, 50, 50)
+                pygame.draw.rect(screen, BROWN, rect)
+    
 
 #create sprite groups
 bullet_group = pygame.sprite.Group()
@@ -30,20 +38,21 @@ bullet_group = pygame.sprite.Group()
 
 
 player = PlayableCharacter('player', 200, 200, 3, 5, 20)
-enemy = PlayableCharacter('enemy', 400, 200, 3, 5, 20)
+enemy = Enemy('enemy', 400, 200, 3, 5, 20, 20)
 
 run = True
 while run:
 
     clock.tick(FPS)
 
-    draw_bg()
+    draw_map(tile_map)
 
     player.update()
     player.draw(screen)
 
     enemy.update()
     enemy.draw(screen)
+    enemy.ai(player)
 
     #update and draw groups
     bullet_group.update()
