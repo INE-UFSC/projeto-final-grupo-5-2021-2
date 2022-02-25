@@ -35,6 +35,11 @@ def draw_map(current_map):
 player = PlayableCharacter(200, 200, 5, 20, 5)
 enemy = Enemy(400, 200, 5, 20)
 
+def health_bar(self):
+    self.health_bar = player.health
+    pygame.draw.rect(screen, (255,0,0), (10, 10, 300//2, 25))
+    pygame.draw.rect(screen, (0,255,0), (10, 10, (self.health//2)*3, 25))
+
 run = True
 while run:
 
@@ -42,12 +47,16 @@ while run:
 
     draw_map(tile_map)
 
+    health_bar(player)
+
     player.update()
     player.draw(screen)
 
     enemy.update()
     enemy.draw(screen)
     enemy.ai(player)
+
+    
 
     #update and draw groups
     bullet_group.update(player, bullet_group, enemy)
