@@ -7,12 +7,12 @@ mainMenu.title("Metal Slug Pygame")
 mainMenu.geometry("600x412+500+250")
 mainMenu.resizable(False,False)
 
-# mainMenu.call('wm', 'iconphoto', mainMenu._w, PhotoImage(file='icon.png'))
-
 cwd = str(os.getcwd())  # Get the current working directory (cwd)
 
+mainMenu.iconbitmap("%s\GUI\icon2.ico" %cwd)
+
 def mainMissionClick():
-    exec(open(r"%s\prototipo/game.py" % cwd).read())
+    exec(open(r"%s\prototipo\game.py" % cwd).read())
 
 
 def settingsClick():
@@ -28,8 +28,9 @@ mainMission = Button(mainMenu,
                     text="MAIN MISSION",
                     background="#666",
                     foreground="#fff",
-                    width=30,
-                    height=5, 
+                    width=25,
+                    height=4,
+                    font=10,
                     command=lambda: mainMissionClick())
 
 settings = Button(mainMenu,
@@ -37,7 +38,7 @@ settings = Button(mainMenu,
                   background="#666",
                   foreground="#fff",
                   width=25,
-                  height=4, 
+                  height=4,
                   command=lambda: settingsClick())
 
 quitGame = Button(mainMenu,
@@ -48,9 +49,9 @@ quitGame = Button(mainMenu,
                     height=4, 
                     command=lambda: quitGameClick())
 
-#pack
-mainMission.pack()
-settings.pack()
-quitGame.pack()
+#grid
+mainMission.pack(pady=20)
+settings.pack(pady=15)
+quitGame.pack(pady=10)
 
 mainMenu.mainloop()
