@@ -1,5 +1,5 @@
 from tkinter import *
-from turtle import width
+import os
 
 mainMenu = Tk()
 mainMenu.title("Metal Slug Pygame")
@@ -9,16 +9,18 @@ mainMenu.resizable(False,False)
 
 # mainMenu.call('wm', 'iconphoto', mainMenu._w, PhotoImage(file='icon.png'))
 
+cwd = str(os.getcwd())  # Get the current working directory (cwd)
+
 def mainMissionClick():
-    exec(open("prototipo/game.py").read())
+    exec(open(r"%s\prototipo/game.py" % cwd).read())
 
 
 def settingsClick():
-    exec(open("settings.py").read())
+    exec(open(r"%s\GUI\settings.py" % cwd).read())
 
 
-def leadboardsClick():
-    exec(open("leadboards.py").read())
+def quitGameClick():
+    mainMenu.destroy()
 
 
 # Buttons
@@ -38,17 +40,17 @@ settings = Button(mainMenu,
                   height=4, 
                   command=lambda: settingsClick())
 
-leadboards = Button(mainMenu,
-                    text="LEADBOARDS",
+quitGame = Button(mainMenu,
+                    text="QUIT GAME",
                     background="#666",
                     foreground="#fff",
                     width=25,
                     height=4, 
-                    command=lambda: leadboardsClick())
+                    command=lambda: quitGameClick())
 
 #pack
 mainMission.pack()
 settings.pack()
-leadboards.pack()
+quitGame.pack()
 
 mainMenu.mainloop()
