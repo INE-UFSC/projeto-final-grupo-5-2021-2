@@ -46,7 +46,7 @@ class Map:
                 elif tile == 1: #create player
                     player = PlayableCharacter(200, 200, 5, 20, 5)
                 elif tile == 2: #create enemies
-                    enemy = Enemy(400, 200, 5, 20)
+                    enemy = Enemy(400, 200, 2, 10)
                     enemy_group.add(enemy)
                 elif tile == 3: #create ammo box
                     pickable_item = PickableItem('Ammo', x * self.tile_size, y * self.tile_size, self.tile_size)

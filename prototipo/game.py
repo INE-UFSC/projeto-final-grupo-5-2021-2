@@ -71,6 +71,8 @@ while run:
     grenade_group.draw(screen)
     explosion_group.update(player, explosion_group, enemy_group)
     explosion_group.draw(screen)
+    pickable_items_group.draw(screen)
+    pickable_items_group.update(player)
 
     #update player actions
     if player.alive:

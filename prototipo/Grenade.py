@@ -64,7 +64,7 @@ class Explosion(pygame.sprite.Sprite):
         self.counter = 0
         self.done = False
 
-    def update(self, player, explosion_group, enemy):
+    def update(self, player, explosion_group, enemy_group):
 
         self.counter += 1
         if self.counter >= self.duration:
@@ -80,10 +80,11 @@ class Explosion(pygame.sprite.Sprite):
                     print(player.health)
 
             #check if enemy take dmg
-            if abs(self.rect.centerx - enemy.rect.centerx) < 30 and abs(self.rect.centery - enemy.rect.centery) < 30:
-                if enemy.alive:
-                    enemy.health -= 50
-                    print(enemy.health)
+            for enemy in enemy_group:
+                if abs(self.rect.centerx - enemy.rect.centerx) < 30 and abs(self.rect.centery - enemy.rect.centery) < 30:
+                    if enemy.alive:
+                        enemy.health -= 50
+                        print(enemy.health)
 
 
 
