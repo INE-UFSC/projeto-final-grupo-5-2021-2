@@ -1,9 +1,13 @@
 import pygame
 from PlayableCharacter import PlayableCharacter
 from Enemy import Enemy
-from map import tile_map
+from map import Map
+#from map_test import tile_map
 from Bullet import bullet_group
 from Grenade import grenade_group, explosion_group
+
+screen_height = 600
+screen_width = 800
 
 pygame.init()
 
@@ -21,7 +25,7 @@ gravity = 0.75
 BG = (144, 201, 120)
 RED = (255, 0, 0)
 BROWN = (110, 38, 14)
-
+'''
 def draw_map(current_map):
     screen.fill(BG)
     
@@ -30,10 +34,12 @@ def draw_map(current_map):
             if current_map[y][x] == 'X':
                 rect = pygame.Rect(x*50, y*50, 50, 50)
                 pygame.draw.rect(screen, BROWN, rect)
-    
-
-player = PlayableCharacter(200, 200, 5, 20, 5)
-enemy = Enemy(400, 200, 5, 20)
+'''   
+game_map = Map(0, 'background_1', screen_height, screen_width, 16, 150)
+#player = PlayableCharacter(200, 200, 5, 20, 5)
+#enemy = Enemy(400, 200, 5, 20)
+game_map.load_data()
+player, enemy_group, pickable_items_group = game_map.process_data()
 
 def health_bar(self):
     self.health_bar = player.health
@@ -45,25 +51,25 @@ while run:
 
     clock.tick(FPS)
 
-    draw_map(tile_map)
-
+#   draw_map(tile_map)
+    game_map.draw_bg(screen)
+#    game_map.draw(screen)
     health_bar(player)
 
     player.update()
     player.draw(screen)
 
-    enemy.update()
-    enemy.draw(screen)
-    enemy.ai(player)
-
-    
+    for enemy in enemy_group:
+        enemy.update()
+        enemy.draw(screen)
+        enemy.ai(player, game_map)
 
     #update and draw groups
-    bullet_group.update(player, bullet_group, enemy)
+    bullet_group.update(player, bullet_group, enemy_group)
     bullet_group.draw(screen)
-    grenade_group.update(player, grenade_group, enemy)
+    grenade_group.update(player, grenade_group, enemy_group)
     grenade_group.draw(screen)
-    explosion_group.update(player, explosion_group, enemy)
+    explosion_group.update(player, explosion_group, enemy_group)
     explosion_group.draw(screen)
 
     #update player actions
@@ -72,7 +78,7 @@ while run:
             player.shoot(bullet_group)
         elif player.throwing:
             player.throw_grenade(grenade_group)
-        player.move()
+        player.move(game_map)
 
     for event in pygame.event.get():
         #quit game

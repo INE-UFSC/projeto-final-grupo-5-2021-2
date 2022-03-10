@@ -2,7 +2,7 @@ import pygame
 import random
 from Bullet import Bullet, bullet_group
 
-class Enemy:
+class Enemy(pygame.sprite.Sprite):
     def __init__(self, x, y, speed, ammo):
             pygame.sprite.Sprite.__init__(self)
             self.alive = True
@@ -27,6 +27,8 @@ class Enemy:
             self.image = pygame.transform.scale(img, (89, 77))
             self.rect = self.image.get_rect()
             self.rect.center = (x, y)
+            self.width = self.image.get_width()
+            self.height = self.image.get_height()
 
 
     def draw(self, screen):
@@ -57,7 +59,7 @@ class Enemy:
             self.ammo -= 1
 
 
-    def move(self, moving_left, moving_right):
+    def move(self, moving_left, moving_right, game_map):
         #reset movement variables
         dx = 0
         dy = 0
@@ -84,17 +86,31 @@ class Enemy:
             self.vel_y
         dy += self.vel_y
 
-        #check collision with floor
-        if self.rect.bottom + dy > 300:
-            dy = 300 - self.rect.bottom
-            self.in_air = False
+        for tile in game_map.tile_list:
+            #check collision in the x direction
+            if tile[1].colliderect(self.rect.x + dx, self.rect.y, self.width, self.height):
+                dx = 0
+            #check for collision in the y direction
+            if tile[1].colliderect(self.rect.x, self.rect.y + dy, self.width, self.height):
+                #check if below the ground, i.e, jumping
+                if self.vel_y < 0:
+                    self.vel_y = 0
+                    dy = tile[1].bottom - self.rect.top
+                #check if above the ground, i.e, falling
+                elif self.vel_y >= 0:
+                    self.vel_y = 0
+                    self.in_air = False
+                    dy = tile[1].top - self.rect.bottom
+        #update rectangle position
+        self.rect.x += dx
+        self.rect.y += dy
 
         #update rectangle position
         self.rect.x += dx
         self.rect.y += dy
 
 
-    def ai(self, player):
+    def ai(self, player, game_map):
         if self.alive and player.alive:
             if self.idling == False and random.randint(1, 200) == 1:
                 self.idling = True
@@ -111,7 +127,7 @@ class Enemy:
                     else:
                         ai_moving_right = False
                     ai_moving_left = not ai_moving_right
-                    self.move(ai_moving_left, ai_moving_right)
+                    self.move(ai_moving_left, ai_moving_right, game_map)
                     self.move_counter += 1
                     #update ai vision as the enemy moves
                     self.vision.center = (self.rect.centerx + 75 * self.direction, self.rect.centery)
