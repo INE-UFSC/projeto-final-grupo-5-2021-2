@@ -23,8 +23,10 @@ class Grenade(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.center = (x, y)
         self.direction = direction
+        self.width = self.image.get_width()
+        self.height = self.image.get_height()
 
-    def update(self, player, bullet_group, enemy):
+    def update(self, game_map, player, enemy_group):
         #move grenade
         gravity = 0.75
         self.speed_y += gravity
@@ -32,10 +34,21 @@ class Grenade(pygame.sprite.Sprite):
         dx = (self.direction * self.speed_x) #horizontal change
 
         # check collision with floor
-        if self.rect.bottom + dy > 300:
-            dy = 300 - self.rect.bottom
-            self.speed_x = 0
-            self.speed_y = 0
+        for tile in game_map.tile_list:
+            #check collision in the x direction
+            if tile[1].colliderect(self.rect.x + dx, self.rect.y, self.width, self.height):
+                dx = 0
+            #check for collision in the y direction
+            if tile[1].colliderect(self.rect.x, self.rect.y + dy, self.width, self.height):
+                #check if below the ground, i.e, jumping
+                if self.speed_y < 0:
+                    self.speed_y = 0
+                    dy = tile[1].bottom - self.rect.top
+                #check if above the ground, i.e, falling
+                elif self.speed_y >= 0:
+                    self.speed_y = 0
+                    self.in_air = False
+                    dy = tile[1].top - self.rect.bottom
 
         #update grenade position
         self.rect.x += dx
@@ -45,12 +58,20 @@ class Grenade(pygame.sprite.Sprite):
         if self.rect.right < 0 or self.rect.left > 800:
             self.kill()
 
-        #explosion timer
+        #countdown timer
         self.timer -= 1
         if self.timer <= 0:
             self.kill()
             explode = Explosion(self.rect.x, self.rect.y)
             explosion_group.add(explode)
+            #do daamge to anyone that is nearby
+            if abs(self.rect.centerx - player.rect.centerx) < game_map.tile_size * 2 and \
+                abs(self.rect.centery - player.rect.centery) < game_map.tile_size * 2:
+                player.health -= 50
+            for enemy in enemy_group:
+                if abs(self.rect.centerx - enemy.rect.centerx) < game_map.tile_size * 2 and \
+                    abs(self.rect.centery - enemy.rect.centery) < game_map.tile_size * 2:
+                    enemy.health -= 50
 
 
 class Explosion(pygame.sprite.Sprite):

@@ -14,5 +14,5 @@ class PickableItem(pygame.sprite.Sprite):
             if self.type == 'Ammo':
                 player.ammo += 15
             elif self.type == 'Grenade':
-                player.grenades += 10
+                player.grenade += 10
             self.kill()

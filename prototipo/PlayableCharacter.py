@@ -97,8 +97,8 @@ class PlayableCharacter(pygame.sprite.Sprite):
     def throw_grenade(self, grenade_group):
         if self.grenade_thrown is False and self.grenade > 0:
             self.grenade_thrown = True
-            grenade = Grenade(self.rect.centerx + (0.6 * self.rect.size[0] * self.direction),
-                              self.rect.top, self.direction)
+            grenade = Grenade(  self.rect.centerx + (0.6 * self.rect.size[0] * self.direction),
+                                self.rect.top, self.direction)
             grenade_group.add(grenade)
             #reduce grenade
             self.grenade -= 1
