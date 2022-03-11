@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-=======
-
->>>>>>> a6787402ddcc0c9a2a58a2d7fb1cd800442d7519
 from pathlib import Path
 from tkinter import Tk, Canvas, Button, PhotoImage
 from game import Game
@@ -21,7 +17,6 @@ class MainMenu():
 
     def main_menu_view(self):
 
-<<<<<<< HEAD
         #window geometry
         width = 800
         height = 600
@@ -37,12 +32,6 @@ class MainMenu():
         self.window.iconbitmap(icon)
         #background
         self.window.configure(bg = "#FFFFFF")
-=======
-        #window customization 
-        self.window.geometry("800x600")
-        self.window.configure(bg = "#FFFFFF")
-
->>>>>>> a6787402ddcc0c9a2a58a2d7fb1cd800442d7519
         #canvas
         canvas = Canvas(self.window,
                         bg = "#FFFFFF",
@@ -107,8 +96,4 @@ class MainMenu():
         self.window.mainloop()
 
 main_menu = MainMenu()
-<<<<<<< HEAD
 main_menu.main_menu_view()
-=======
-main_menu.main_menu_view()
->>>>>>> a6787402ddcc0c9a2a58a2d7fb1cd800442d7519
