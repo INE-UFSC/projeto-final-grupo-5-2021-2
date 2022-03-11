@@ -72,7 +72,7 @@ class Game():
             #update and draw groups
             bullet_group.update(player, bullet_group, enemy_group)
             bullet_group.draw(screen)
-            grenade_group.update(player, grenade_group, enemy_group)
+            grenade_group.update(game_map, player, enemy_group)
             grenade_group.draw(screen)
             explosion_group.update(player, explosion_group, enemy_group)
             explosion_group.draw(screen)
