@@ -28,8 +28,8 @@ class PlayableCharacter(pygame.sprite.Sprite):
         self.shooting = False
         self.throwing = False
         self.sprite_index = 0
-        self.action = 0
-        self.animation_list = [animation_list]
+        self.action = 2
+        self.animation_list = animation_list
         self.update_time = pygame.time.get_ticks()
         self.image = self.animation_list[self.action][self.sprite_index]
 
@@ -95,6 +95,7 @@ class PlayableCharacter(pygame.sprite.Sprite):
 
     def shoot(self, bullet_group):
         if self.shoot_cooldown == 0 and self.ammo > 0:
+            self.update_action(1)
             self.shoot_cooldown = 20
             bullet = Bullet(self.rect.centerx + (0.6 * self.rect.size[0] * self.direction), self.rect.centery, self.direction)
             bullet_group.add(bullet)
@@ -144,7 +145,7 @@ class PlayableCharacter(pygame.sprite.Sprite):
         # update the animation settings
             self.sprite_index = 0
             self.update_time = pygame.time.get_ticks()
-
+        
 
     def draw(self, screen):
         screen.blit(pygame.transform.flip(self.image, self.flip, False), self.rect)

@@ -63,6 +63,7 @@ class Game():
 
             player.update()
             player.draw(screen)
+            # player.update_animation()
 
             for enemy in enemy_group:
                 enemy.update()
