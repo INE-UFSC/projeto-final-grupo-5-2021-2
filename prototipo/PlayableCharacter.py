@@ -1,6 +1,7 @@
 import pygame
 from Bullet import Bullet
 from Grenade import Grenade
+from Animations import animation_list
 
 class PlayableCharacter(pygame.sprite.Sprite):
     def __init__(self, x, y, speed, ammo, grenade):
@@ -26,6 +27,11 @@ class PlayableCharacter(pygame.sprite.Sprite):
         self.moving_right = False
         self.shooting = False
         self.throwing = False
+        self.sprite_index = 0
+        self.action = 0
+        self.animation_list = [animation_list]
+        self.update_time = pygame.time.get_ticks()
+        self.image = self.animation_list[self.action][self.sprite_index]
 
         #load all images for the players
         img = pygame.image.load('assets/marco_rossi.png').convert_alpha()
@@ -60,6 +66,7 @@ class PlayableCharacter(pygame.sprite.Sprite):
             self.vel_y = -11
             self.jump = False
             self.in_air = True
+            self.update_action(0)
 
         #apply gravity
         self.vel_y += 0.75
@@ -110,6 +117,34 @@ class PlayableCharacter(pygame.sprite.Sprite):
             self.alive = False
             img = pygame.image.load('assets/marco_rossi_dead.png').convert_alpha()
             self.image = pygame.transform.scale(img, (75, 75))
+
+    
+    def update_animation(self):
+        # update animation
+        animation_cooldown = 100
+
+        # upadete image depending on current frame
+        self.image = self.animation_list[self.action][self.sprite_index]
+
+        # check if enough time has passed since the last update
+        if pygame.time.get_ticks() - self.update_time > animation_cooldown:
+            self.update_time = pygame.time.get_ticks()
+            self.sprite_index += 1
+
+        # if the animation has run out then reset back to start
+        if self.sprite_index >= len(self.animation_list[self.action]):
+            self.sprite_index = 0
+    
+
+    def update_action(self, new_action):
+        # check if the new action is different to the previous one
+        if new_action != self.action:
+            self.action = new_action
+
+        # update the animation settings
+            self.sprite_index = 0
+            self.update_time = pygame.time.get_ticks()
+
 
     def draw(self, screen):
         screen.blit(pygame.transform.flip(self.image, self.flip, False), self.rect)
