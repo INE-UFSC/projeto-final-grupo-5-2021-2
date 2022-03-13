@@ -42,6 +42,7 @@ class PlayableCharacter(pygame.sprite.Sprite):
         self.height = self.image.get_height()
 
     def update(self):
+        self.update_animation()
         self.check_alive()
         #update cooldown
         if self.shoot_cooldown > 0:
@@ -125,7 +126,7 @@ class PlayableCharacter(pygame.sprite.Sprite):
         animation_cooldown = 100
 
         # upadete image depending on current frame
-        self.image = self.animation_list[self.action][self.sprite_index]
+        self.image = pygame.transform.scale(self.animation_list[self.action][self.sprite_index], (75,75))
 
         # check if enough time has passed since the last update
         if pygame.time.get_ticks() - self.update_time > animation_cooldown:
