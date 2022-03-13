@@ -83,11 +83,18 @@ class Game():
             #update player actions
             if player.alive:
                 if player.shooting:
+                    player.update_action(1)
                     player.shoot(bullet_group)
                 elif player.throwing:
                     player.throw_grenade(grenade_group)
+                elif player.in_air:
+                    player.update_action(0)#2: jump
+#              elif player.moving_left or player.moving_right:
+#                   player.update_action()#1: run
+                else:
+                    player.update_action(2)#0: idle
                 player.move(game_map)
-
+    
             for event in pygame.event.get():
                 #quit game
                 if event.type == pygame.QUIT:

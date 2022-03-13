@@ -67,7 +67,7 @@ class PlayableCharacter(pygame.sprite.Sprite):
             self.vel_y = -11
             self.jump = False
             self.in_air = True
-            self.update_action(0)
+#            self.update_action(0)
 
         #apply gravity
         self.vel_y += 0.75
@@ -96,7 +96,7 @@ class PlayableCharacter(pygame.sprite.Sprite):
 
     def shoot(self, bullet_group):
         if self.shoot_cooldown == 0 and self.ammo > 0:
-            self.update_action(1)
+#            self.update_action(1)
             self.shoot_cooldown = 20
             bullet = Bullet(self.rect.centerx + (0.6 * self.rect.size[0] * self.direction), self.rect.centery, self.direction, 'human')
             bullet_group.add(bullet)
@@ -126,7 +126,7 @@ class PlayableCharacter(pygame.sprite.Sprite):
         animation_cooldown = 100
 
         # upadete image depending on current frame
-        self.image = pygame.transform.scale(self.animation_list[self.action][self.sprite_index], (75,75))
+        self.image = self.animation_list[self.action][self.sprite_index]
 
         # check if enough time has passed since the last update
         if pygame.time.get_ticks() - self.update_time > animation_cooldown:

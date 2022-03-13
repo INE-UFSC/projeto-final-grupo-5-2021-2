@@ -15,7 +15,7 @@ def animations(animations_path):
 
     for i in range(files_number):
         img = pygame.image.load(f'{animations_path}/{i}.png')
-        img = pygame.transform.scale(img, (int(img.get_width() * 75), int(img.get_height() * 75)))
+        img = pygame.transform.scale(img, (int(img.get_width() * 2), int(img.get_height() * 2)))
         img_list.append(img)
 
     animation_list.append(img_list)
