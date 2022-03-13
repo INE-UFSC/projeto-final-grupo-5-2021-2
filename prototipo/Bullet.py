@@ -3,20 +3,32 @@ import pygame
 #load images
 #bullet
 bullet_img = pygame.image.load('assets/bullet.png')
+slug_bullet_img = pygame.image.load('assets/slug_bullet.png')
+
 #create sprite groups
 bullet_group = pygame.sprite.Group()
+
+
 class Bullet(pygame.sprite.Sprite):
-    def __init__(self, x, y, direction):
+    def __init__(self, x, y, direction, type):
         pygame.sprite.Sprite.__init__(self)
         self.speed = 10
-        self.image = bullet_img
+        self.direction = direction
+        self.type = type
+
+        #check who is shooting
+        if self.type == 'human':
+            self.image = bullet_img
+        if self.type == 'slug':
+            self.image = slug_bullet_img
+
         self.rect = self.image.get_rect()
         self.rect.center = (x, y)
-        self.direction = direction
 
     def update(self, player, bullet_group, enemy_group):
         #move bullet
         self.rect.x += (self.direction * self.speed)
+
         #check if bullet has gone off screen
         if self.rect.right < 0 or self.rect.left > 800:
             self.kill()
