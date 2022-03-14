@@ -1,6 +1,6 @@
 from pathlib import Path
 from tkinter import Tk, Canvas, Button, PhotoImage
-from game import Game
+from MainMissionMenu import MainMissionMenu
 
 class MainMenu():
     def __init__(self):
@@ -12,11 +12,16 @@ class MainMenu():
         return self.assets_path / Path(path)
 
     def main_mission_button_click(self):
+        self.window.forget()
+        MainMissionMenu().main_mission_menu_view()
+    
+    def quit_game_button_click(self):
         self.window.destroy()
-        Game.iniciar_partida()
+
+    def settings_button_click(self):
+        self.window.destroy()
 
     def main_menu_view(self):
-
         #window geometry
         width = 800
         height = 600
@@ -27,11 +32,10 @@ class MainMenu():
         self.window.geometry(f"{width}x{height}+{posx}+{posy}")
 
         #title and icon
-        self.window.title("Metal Slug Pygame")
+        self.window.title("Metal Slug")
         icon = self.relative_to_assets('icon_marco.ico')
         self.window.iconbitmap(icon)
-        #background
-        self.window.configure(bg = "#FFFFFF")
+
         #canvas
         canvas = Canvas(self.window,
                         bg = "#FFFFFF",
@@ -43,7 +47,7 @@ class MainMenu():
         canvas.place(x = 0, y = 0)
 
         #background
-        background_image = PhotoImage(file=self.relative_to_assets("background_image.png"))
+        background_image = PhotoImage(file=self.relative_to_assets("background_main_menu.png"))
         background = canvas.create_image(   400.0,
                                             300.0,
                                             image=background_image)
@@ -53,7 +57,7 @@ class MainMenu():
         quit_game_button = Button(  image=quit_game_button_image,
                                     borderwidth=0,
                                     highlightthickness=0,
-                                    command=lambda: print('oi'),
+                                    command=lambda: self.quit_game_button_click(),
                                     relief="flat")
         quit_game_button.place( x=527.0,
                                 y=467.0,
@@ -75,12 +79,11 @@ class MainMenu():
         #settings button
         settings_button_image = PhotoImage(
             file=self.relative_to_assets("settings_button.png"))
-        settings_button = Button(
-            image=settings_button_image,
-            borderwidth=0,
-            highlightthickness=0,
-            command=lambda: print('aa'),
-            relief="flat")
+        settings_button = Button(   image=settings_button_image,
+                                    borderwidth=0,
+                                    highlightthickness=0,
+                                    command=lambda: self.settings_button_click(),
+                                    relief="flat")
         settings_button.place(  x=527.0,
                                 y=360.0,
                                 width=219.0,
