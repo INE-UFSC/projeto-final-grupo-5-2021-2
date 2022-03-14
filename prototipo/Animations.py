@@ -1,25 +1,22 @@
 import os
 import pygame
 
-dir = 'assets/actions'
-
 animation_list = []
 
-def animations(animations_path):
-    global animation_list
-    files_number = 0
-    img_list = []
-
-    for file in os.listdir(animations_path):
-        files_number += 1
-
-    for i in range(files_number):
-        img = pygame.image.load(f'{animations_path}/{i}.png')
-        img = pygame.transform.scale(img, (int(img.get_width() * 2), int(img.get_height() * 2)))
-        img_list.append(img)
-
-    animation_list.append(img_list)
+class Animations():
+    def __init__(self, path):
+        self.path = path
+        self.files_number = 0
+        self.img_list = []
 
 
-for path in os.listdir(dir):
-    animations(f'{dir}/{path}')
+    def count_files(self):
+        for file in self.path:
+            self.files_number += 1
+
+
+    def create_sprites(self):
+        for i in range(self.files_number):
+            img = pygame.image.load(f'{self.path}/{i}.png')
+            img = pygame.transform.scale(img, (int(img.get_width() * 2), int(img.get_height() * 2)))
+            self.img_list.append(img)

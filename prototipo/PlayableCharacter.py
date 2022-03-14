@@ -1,7 +1,7 @@
 import pygame
 from Bullet import Bullet
 from Grenade import Grenade
-from Animations import animation_list
+from createAnimations import animation_list
 
 class PlayableCharacter(pygame.sprite.Sprite):
     def __init__(self, x, y, speed, ammo, grenade):
