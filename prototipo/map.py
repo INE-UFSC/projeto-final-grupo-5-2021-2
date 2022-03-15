@@ -1,4 +1,5 @@
 from PlayableCharacter import PlayableCharacter
+from Marco import Marco
 from Slug import Slug
 from Enemy import Enemy
 import pygame
@@ -45,7 +46,7 @@ class Map:
                     tile_data = (img, img_rect)
                     self.tile_list.append(tile_data)
                 elif tile == 1: #create player
-                    player = PlayableCharacter(200, 200, 5, 20, 5)
+                    player = Marco(200, 200, 5, 20, 5)
                 elif tile == 2: #create enemies
                     enemy = Enemy(400, 200, 2, 10)
                     enemy_group.add(enemy)

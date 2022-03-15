@@ -1,7 +1,7 @@
 import pygame
 from Bullet import Bullet
 from Grenade import Grenade
-from createAnimations import animation_list
+from abc import abstractmethod
 
 class PlayableCharacter(pygame.sprite.Sprite):
     def __init__(self, x, y, speed, ammo, grenade):
@@ -29,19 +29,11 @@ class PlayableCharacter(pygame.sprite.Sprite):
         self.moving_right = False
         self.shooting = False
         self.throwing = False
-        self.sprite_index = 0
-        self.action = 2
-        self.animation_list = animation_list
-        self.update_time = pygame.time.get_ticks()
-        self.image = self.animation_list[self.action][self.sprite_index]
+
 
         #load all images for the players
-        img = pygame.image.load('assets/marco_rossi.png').convert_alpha()
-        self.image = pygame.transform.scale(img, (75, 75))
-        self.rect = self.image.get_rect()
-        self.rect.center = (x, y)
-        self.width = self.image.get_width()
-        self.height = self.image.get_height()
+        self.width = None
+        self.height = None
 
     def update(self):
         self.update_animation()
@@ -73,8 +65,6 @@ class PlayableCharacter(pygame.sprite.Sprite):
 
         #apply gravity
         self.vel_y += 0.75
-        if self.vel_y > 10:
-            self.vel_y
         dy += self.vel_y
 
         for tile in game_map.tile_list:
@@ -108,7 +98,7 @@ class PlayableCharacter(pygame.sprite.Sprite):
     def throw_grenade(self, grenade_group):
         if self.grenade_thrown is False and self.grenade > 0:
             self.grenade_thrown = True
-            grenade = Grenade(  self.rect.centerx + (0.6 * self.rect.size[0] * self.direction),
+            grenade = Grenade(self.rect.centerx + (0.6 * self.rect.size[0] * self.direction),
                                 self.rect.top, self.direction)
             grenade_group.add(grenade)
             #reduce grenade
@@ -119,35 +109,15 @@ class PlayableCharacter(pygame.sprite.Sprite):
             self.health = 0
             self.speed = 0
             self.alive = False
-            img = pygame.image.load('assets/marco_rossi_dead.png').convert_alpha()
-            self.image = pygame.transform.scale(img, (75, 75))
+            self.image = None
 
-
+    @abstractmethod
     def update_animation(self):
-        # update animation
-        animation_cooldown = 100
-
-        # upadete image depending on current frame
-        self.image = self.animation_list[self.action][self.sprite_index]
-
-        # check if enough time has passed since the last update
-        if pygame.time.get_ticks() - self.update_time > animation_cooldown:
-            self.update_time = pygame.time.get_ticks()
-            self.sprite_index += 1
-
-        # if the animation has run out then reset back to start
-        if self.sprite_index >= len(self.animation_list[self.action]):
-            self.sprite_index = 0
+        pass
     
-
+    @abstractmethod
     def update_action(self, new_action):
-        # check if the new action is different to the previous one
-        if new_action != self.action:
-            self.action = new_action
-
-        # update the animation settings
-            self.sprite_index = 0
-            self.update_time = pygame.time.get_ticks()
+        pass
         
 
     def draw(self, screen):

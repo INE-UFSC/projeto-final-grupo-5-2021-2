@@ -1,5 +1,5 @@
 from Slug import Slug
-from PlayableCharacter import PlayableCharacter
+from Marco import Marco
 
 
 def enter_slug(player):
@@ -9,6 +9,6 @@ def enter_slug(player):
 
 def exit_slug(player):
 
-    new_player = PlayableCharacter(player.rect[0], player.rect[1], player.player_speed, player.player_ammo, player.player_grenade)
+    new_player = Marco(player.rect[0], player.rect[1], player.player_speed, player.player_ammo, player.player_grenade)
     new_player.health = player.player_health
     return new_player
