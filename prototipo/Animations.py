@@ -11,7 +11,7 @@ class Animations():
 
 
     def count_files(self):
-        for file in self.path:
+        for file in os.listdir(self.path):
             self.files_number += 1
 
 
