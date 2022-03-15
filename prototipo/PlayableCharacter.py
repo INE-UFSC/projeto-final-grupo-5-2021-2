@@ -1,7 +1,6 @@
 import pygame
 from Bullet import Bullet
 from Grenade import Grenade
-from Slug import Slug
 from createAnimations import animation_list
 
 class PlayableCharacter(pygame.sprite.Sprite):
@@ -123,9 +122,7 @@ class PlayableCharacter(pygame.sprite.Sprite):
             img = pygame.image.load('assets/marco_rossi_dead.png').convert_alpha()
             self.image = pygame.transform.scale(img, (75, 75))
 
-    def enter_slug(self, player):
-        return Slug(player.rect[0], player.rect[1], player.health, player.ammo, player.grenade, player.speed)
-    
+
     def update_animation(self):
         # update animation
         animation_cooldown = 100
