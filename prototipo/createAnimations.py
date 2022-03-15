@@ -12,10 +12,10 @@ path_list.append(jumping)
 shooting = Animations(f'{actions_path}/shooting')
 path_list.append(shooting)
 
-standing = Animations(f'{animation_list}/standing')
+standing = Animations(f'{actions_path}/standing')
 path_list.append(standing)
 
-throwing_bomb = Animations(f'{animation_list}/throwing_bomb')
+throwing_bomb = Animations(f'{actions_path}/throwing_bomb')
 path_list.append(throwing_bomb)
 
 for i in path_list:
