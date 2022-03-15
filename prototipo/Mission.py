@@ -5,6 +5,7 @@ from map import Map
 #from map_test import tile_map
 from Bullet import bullet_group
 from Grenade import grenade_group, explosion_group
+from CurrentPlayer import enter_slug, exit_slug
 
 screen_height = 600
 screen_width = 800
@@ -63,6 +64,14 @@ class Mission():
 
             player.update()
             player.draw(screen)
+
+            # controls if the current player is the slug or human
+            if player.in_slug:
+                player = enter_slug(player)
+            if player.is_human is False and player.alive is False:
+                player = exit_slug(player)
+                player.update()
+
             # player.update_animation()
 
             for enemy in enemy_group:
