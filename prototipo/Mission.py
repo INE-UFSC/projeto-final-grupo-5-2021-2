@@ -5,6 +5,7 @@ from map import Map
 #from map_test import tile_map
 from Bullet import bullet_group
 from Grenade import grenade_group, explosion_group
+from CurrentPlayer import enter_slug, exit_slug
 
 screen_height = 600
 screen_width = 800
@@ -63,13 +64,13 @@ class Mission():
 
             player.update()
             player.draw(screen)
+
+            # controls if the current player is the slug or human
             if player.in_slug:
-                player = player.enter_slug(player)
+                player = enter_slug(player)
             if player.is_human is False and player.alive is False:
-                current_health = player.player_health
-                player = PlayableCharacter(player.rect[0], player.rect[1], player.player_speed, player.player_ammo, player.player_grenade)
-                player.health = current_health
-                player.alive = True
+                player = exit_slug(player)
+                player.update()
 
             # player.update_animation()
 
