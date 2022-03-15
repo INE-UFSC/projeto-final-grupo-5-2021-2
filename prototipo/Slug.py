@@ -32,6 +32,8 @@ class Slug(pygame.sprite.Sprite):
         self.vel_y = 0
         self.in_air = True
         self.flip = False
+        self.in_slug = False
+        self.is_human = False
 
         # slug action variables
         self.jump = False
@@ -103,7 +105,7 @@ class Slug(pygame.sprite.Sprite):
     def shoot(self, bullet_group):
         if self.shoot_cooldown == 0 and self.ammo > 0:
             self.shoot_cooldown = 15
-            bullet = Bullet(self.rect.centerx + (0.7 * self.rect.size[0] * self.direction), (self.rect.centery - 12), self.direction, 'slug')
+            bullet = Bullet(self.rect.centerx + (0.6 * self.rect.size[0] * self.direction), (self.rect.centery - 12), self.direction, 'slug')
             bullet_group.add(bullet)
             #reduce ammo
             self.ammo -= 1
@@ -111,7 +113,7 @@ class Slug(pygame.sprite.Sprite):
     def throw_grenade(self, grenade_group):
         if self.grenade_thrown is False and self.grenade > 0:
             self.grenade_thrown = True
-            grenade = Grenade(self.rect.centerx + (0.6 * self.rect.size[0] * self.direction),
+            grenade = Grenade(self.rect.centerx + (0.7 * self.rect.size[0] * self.direction),
                                 self.rect.top, self.direction)
             grenade_group.add(grenade)
             #reduce grenade
@@ -119,3 +121,9 @@ class Slug(pygame.sprite.Sprite):
 
     def draw(self, screen):
         screen.blit(pygame.transform.flip(self.image, self.flip, False), self.rect)
+
+    def update_animation(self):
+        pass
+
+    def update_action(self, new_action):
+        pass

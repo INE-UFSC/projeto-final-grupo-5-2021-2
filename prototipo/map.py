@@ -1,4 +1,5 @@
 from PlayableCharacter import PlayableCharacter
+from Slug import Slug
 from Enemy import Enemy
 import pygame
 import csv
@@ -54,6 +55,10 @@ class Map:
                 elif tile == 4: #create grenade box
                     pickable_item = PickableItem('Grenade', x * self.tile_size, y * self.tile_size, self.tile_size)
                     pickable_items_group.add(pickable_item)
+                elif tile == 5:
+                    pickable_item = PickableItem('Slug', x * self.tile_size, y * self.tile_size, self.tile_size)
+                    pickable_items_group.add(pickable_item)
+
         return player, enemy_group, pickable_items_group
 
     def draw_bg(self, screen):

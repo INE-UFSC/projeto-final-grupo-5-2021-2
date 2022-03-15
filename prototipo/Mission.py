@@ -63,6 +63,14 @@ class Mission():
 
             player.update()
             player.draw(screen)
+            if player.in_slug:
+                player = player.enter_slug(player)
+            if player.is_human is False and player.alive is False:
+                current_health = player.player_health
+                player = PlayableCharacter(player.rect[0], player.rect[1], player.player_speed, player.player_ammo, player.player_grenade)
+                player.health = current_health
+                player.alive = True
+
             # player.update_animation()
 
             for enemy in enemy_group:
