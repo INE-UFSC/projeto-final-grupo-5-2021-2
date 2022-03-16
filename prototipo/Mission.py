@@ -5,7 +5,7 @@ from map import Map
 #from map_test import tile_map
 from Bullet import bullet_group
 from Grenade import grenade_group, explosion_group
-from CurrentPlayer import enter_slug, exit_slug
+from CurrentPlayer import CurrentPlayer
 
 screen_height = 600
 screen_width = 800
@@ -46,6 +46,7 @@ class Mission():
         #enemy = Enemy(400, 200, 5, 20)
         game_map.load_data()
         player, enemy_group, pickable_items_group = game_map.process_data()
+        current_player = CurrentPlayer(player)
 
         def health_bar(self):
             self.health_bar = player.health
@@ -67,9 +68,11 @@ class Mission():
 
             # controls if the current player is the slug or human
             if player.in_slug:
-                player = enter_slug(player)
+                player = current_player.enter_slug()
+                current_player = CurrentPlayer(player)
             if player.is_human is False and player.alive is False:
-                player = exit_slug(player)
+                player = current_player.exit_slug()
+                current_player = CurrentPlayer(player)
                 player.update()
 
             # player.update_animation()
