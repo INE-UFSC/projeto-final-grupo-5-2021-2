@@ -4,7 +4,7 @@ from Enemy import Enemy
 from map import Map
 #from map_test import tile_map
 from Bullet import bullet_group
-from Grenade import grenade_group, explosion_group
+from Grenade import grenade_group
 from CurrentPlayer import CurrentPlayer
 
 screen_height = 600
@@ -87,8 +87,6 @@ class Mission():
             bullet_group.draw(screen)
             grenade_group.update(game_map, player, enemy_group)
             grenade_group.draw(screen)
-            explosion_group.update(player, explosion_group, enemy_group)
-            explosion_group.draw(screen)
             pickable_items_group.draw(screen)
             pickable_items_group.update(player)
 
