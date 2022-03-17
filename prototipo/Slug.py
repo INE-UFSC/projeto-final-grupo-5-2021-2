@@ -9,7 +9,7 @@ slug_img = pygame.image.load('assets/actions/slug_standing/0.png')
 
 
 class Slug(PlayableCharacter, pygame.sprite.Sprite):
-    def __init__(self, x, y, player_health, player_ammo, player_grenade, player_speed):
+    def __init__(self, x, y, player_health, player_ammo, player_grenade, player_speed, lives):
         super().__init__(x, y, 5, 200, 5)
         self.image = pygame.transform.scale(slug_img, (100, 75))
         self.rect = self.image.get_rect(center=(x, y))
@@ -21,6 +21,7 @@ class Slug(PlayableCharacter, pygame.sprite.Sprite):
         self.player_ammo = player_ammo
         self.player_grenade = player_grenade
         self.player_speed = player_speed
+        self.lives = lives
 
         # slug stats
         self.alive = True
