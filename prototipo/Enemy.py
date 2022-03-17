@@ -31,6 +31,14 @@ class Enemy(pygame.sprite.Sprite):
                 self.rect.center = (x, y)
                 self.width = self.image.get_width()
                 self.height = self.image.get_height()
+            
+            elif self.type == 'badass':
+                img = pygame.image.load('assets/EnemyBadAss.png').convert_alpha()
+                self.image = pygame.transform.scale(img, (75, 100))
+                self.rect = self.image.get_rect()
+                self.rect.center = (x, y)
+                self.width = self.image.get_width()
+                self.height = self.image.get_height()
 
             elif self.type == 'tank':
                 img = pygame.image.load('assets/enemy_tank.png').convert_alpha()
@@ -49,8 +57,12 @@ class Enemy(pygame.sprite.Sprite):
             self.health = 0
             self.speed = 0
             self.alive = False
-            img = pygame.image.load('assets/RebelSoldier_dead.png').convert_alpha()
-            self.image = pygame.transform.scale(img, (89, 77))
+            if self.type == "human":
+                img = pygame.image.load('assets/RebelSoldier_dead.png').convert_alpha()
+                self.image = pygame.transform.scale(img, (89, 77))
+            elif self.type == "badass":
+                img = pygame.image.load('assets/EnemyBadAss_dead.png').convert_alpha()
+                self.image = pygame.transform.scale(img, (75, 100))
 
 
     def update(self):
@@ -150,4 +162,3 @@ class Enemy(pygame.sprite.Sprite):
                     self.idling_counter -= 1
                     if self.idling_counter <= 0:
                         self.idling = False
-

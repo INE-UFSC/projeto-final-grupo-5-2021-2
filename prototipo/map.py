@@ -4,8 +4,8 @@ from Slug import Slug
 from Enemy import Enemy
 import pygame
 import csv
-
 from PickableItem import PickableItem
+
 class Map:
     def __init__(self, level, background, screen_height, screen_width, rows, cols, sprite_list=[], tile_list=[], map_data=[]):
         self.level = level
@@ -21,6 +21,7 @@ class Map:
         img = pygame.image.load(f'assets/tiles/0.png').convert_alpha()
         sprite_list.append(img)
 
+
     def load_data(self):
         for row in range(self.rows):
             r = [-1] * self.cols
@@ -31,6 +32,7 @@ class Map:
             for x, row in enumerate(reader):
                 for y, tile in enumerate(row):
                     self.map_data[x][y] = int(tile)
+
 
     def process_data(self):
         enemy_group = pygame.sprite.Group()
@@ -62,8 +64,12 @@ class Map:
                 elif tile == 6: # create tank enemies
                     enemy = Enemy(600, 200, 2, 50, 'tank')
                     enemy_group.add(enemy)
+                elif tile == 7: # create badass enemies
+                    enemyB = Enemy(500, 200, 2, 50, 'badass')
+                    enemy_group.add(enemyB)
 
         return player, enemy_group, pickable_items_group
+
 
     def draw_bg(self, screen):
         screen.blit(self.background, (0, 0))
