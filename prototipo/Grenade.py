@@ -4,12 +4,15 @@ import pygame
 #grenade
 grenade_img = pygame.image.load('assets/grenade.png')
 #explosion
-explosion_img = pygame.image.load('assets/explosion.png')
+explosion_fr_1 = pygame.image.load('assets/explosion/exp1.png')
+explosion_fr_2 = pygame.image.load('assets/explosion/exp2.png')
+explosion_fr_3 = pygame.image.load('assets/explosion/exp3.png')
+explosion_fr_4 = pygame.image.load('assets/explosion/exp4.png')
+explosion_fr_5 = pygame.image.load('assets/explosion/exp5.png')
+explosion_animation = [explosion_fr_1, explosion_fr_2, explosion_fr_3, explosion_fr_4, explosion_fr_5]
 #create sprite groups
+
 grenade_group = pygame.sprite.Group()
-explosion_group = pygame.sprite.Group()
-
-
 
 
 class Grenade(pygame.sprite.Sprite):
@@ -25,89 +28,52 @@ class Grenade(pygame.sprite.Sprite):
         self.direction = direction
         self.width = self.image.get_width()
         self.height = self.image.get_height()
+        self.dx = 0
+        self.dy = 0
+        self.dmg_player = False
+        self.in_air = True
+        self.animation_index = 0
 
     def update(self, game_map, player, enemy_group):
         #move grenade
-        gravity = 0.75
-        self.speed_y += gravity
-        dy = self.speed_y #vertical change
-        dx = (self.direction * self.speed_x) #horizontal change
+        if self.in_air:
+            gravity = 0.75
+            self.speed_y += gravity
+            self.dy = self.speed_y  # vertical change
+            self.dx = (self.direction * self.speed_x)  # horizontal change
 
-        # check collision with floor
+        # check collision with map
         for tile in game_map.tile_list:
-            #check collision in the x direction
-            if tile[1].colliderect(self.rect.x + dx, self.rect.y, self.width, self.height):
-                dx = 0
-            #check for collision in the y direction
-            if tile[1].colliderect(self.rect.x, self.rect.y + dy, self.width, self.height):
-                #check if below the ground, i.e, jumping
-                if self.speed_y < 0:
-                    self.speed_y = 0
-                    dy = tile[1].bottom - self.rect.top
-                #check if above the ground, i.e, falling
-                elif self.speed_y >= 0:
-                    self.speed_y = 0
-                    self.in_air = False
-                    dy = tile[1].top - self.rect.bottom
+            if self.rect.colliderect(tile[1]):
+                self.dx = 0
+                self.dy = 0
+                self.in_air = False
+                self.explode(player, enemy_group)
 
-        #update grenade position
-        self.rect.x += dx
-        self.rect.y += dy
+        # update grenade position
 
-        #check if grenade has gone off screen
+        self.rect.x += self.dx
+        self.rect.y += self.dy
+
+        # check if grenade has gone off screen
         if self.rect.right < 0 or self.rect.left > 800:
             self.kill()
 
-        #countdown timer
-        self.timer -= 1
-        if self.timer <= 0:
+    def explode(self, player, enemy_group):
+
+        self.image = explosion_animation[int(self.animation_index)]
+        self.rect = self.image.get_rect(midbottom=self.rect.midbottom)
+
+        if self.rect.colliderect(player.rect) and self.dmg_player is False:
+            player.health -= 50
+            self.dmg_player = True
+
+        for enemy in enemy_group:
+            if self.rect.colliderect(enemy.rect):
+                enemy.health -= 100
+
+        self.animation_index += 0.04
+
+        if self.animation_index >= len(explosion_animation):
+            self.animation_index = 0
             self.kill()
-            explode = Explosion(self.rect.x, self.rect.y)
-            explosion_group.add(explode)
-            #do daamge to anyone that is nearby
-            if abs(self.rect.centerx - player.rect.centerx) < game_map.tile_size * 2 and \
-                abs(self.rect.centery - player.rect.centery) < game_map.tile_size * 2:
-                player.health -= 50
-            for enemy in enemy_group:
-                if abs(self.rect.centerx - enemy.rect.centerx) < game_map.tile_size * 2 and \
-                    abs(self.rect.centery - enemy.rect.centery) < game_map.tile_size * 2:
-                    enemy.health -= 50
-
-
-class Explosion(pygame.sprite.Sprite):
-
-    def __init__(self, x, y):
-        pygame.sprite.Sprite.__init__(self)
-        self.image = explosion_img
-        self.rect = self.image.get_rect()
-        self.rect.center = (x, y)
-        self.duration = 2
-        self.counter = 0
-        self.done = False
-
-    def update(self, player, explosion_group, enemy_group):
-
-        self.counter += 1
-        if self.counter >= self.duration:
-            self.counter = 0
-            self.kill()
-            self.done = True
-
-        if self.done is False:
-            #check if player take dmg
-            if abs(self.rect.centerx - player.rect.centerx) < 30 and abs(self.rect.centery - player.rect.centery) < 30:
-                if player.alive:
-                    player.health -= 50
-                    print(player.health)
-
-            #check if enemy take dmg
-            for enemy in enemy_group:
-                if abs(self.rect.centerx - enemy.rect.centerx) < 30 and abs(self.rect.centery - enemy.rect.centery) < 30:
-                    if enemy.alive:
-                        enemy.health -= 50
-                        print(enemy.health)
-
-
-
-
-
