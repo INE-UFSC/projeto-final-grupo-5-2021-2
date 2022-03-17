@@ -2,9 +2,9 @@ from pathlib import Path
 from tkinter import Tk, Canvas, Button, PhotoImage
 from Mission import Mission
 
-class MainMissionMenu():
-    def __init__(self):
-        self.window = Tk()
+class MainMissionContainer():
+    def __init__(self, window):
+        self.window = window
         self.output_path = Path(__file__).parent
         self.assets_path = self.output_path / Path("./assets")
 
@@ -15,21 +15,7 @@ class MainMissionMenu():
         mission = Mission(0)
         mission.iniciar_partida()
 
-    def main_mission_menu_view(self):
-        #window geometry
-        width = 800
-        height = 600
-        width_screen = self.window.winfo_screenwidth()
-        height_screen = self.window.winfo_screenheight()
-        posx = int(width_screen/2 - width/2)
-        posy = int(height_screen/2 - height/2)
-        self.window.geometry(f"{width}x{height}+{posx}+{posy}")
-
-        #title and icon
-        self.window.title("Metal Slug")
-        icon = self.relative_to_assets('icon_marco.ico')
-        self.window.iconbitmap(icon)
-
+    def show_menu(self):
         canvas = Canvas(self.window,
                         bg = "#FFFFFF",
                         height = 600,
@@ -86,6 +72,3 @@ class MainMissionMenu():
 
         self.window.resizable(False, False)
         self.window.mainloop()
-
-main_mission_menu = MainMissionMenu()
-main_mission_menu.main_mission_menu_view()
