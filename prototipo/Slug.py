@@ -2,9 +2,10 @@ import pygame
 from Grenade import Grenade
 from Bullet import Bullet
 from PlayableCharacter import PlayableCharacter
+from createAnimations import slug_animation_list
 
 # slug sprite
-slug_img = pygame.image.load('assets/slug_1.png')
+slug_img = pygame.image.load('assets/actions/slug_standing/0.png')
 
 
 class Slug(PlayableCharacter, pygame.sprite.Sprite):
@@ -27,6 +28,13 @@ class Slug(PlayableCharacter, pygame.sprite.Sprite):
         self.in_slug = False
         self.is_human = False
 
+        # slug action variables
+        self.sprite_index = 0
+        self.action = 2
+        self.animation_list = slug_animation_list
+        self.update_time = pygame.time.get_ticks()
+        self.image = pygame.transform.scale(self.animation_list[self.action][self.sprite_index], (100, 75))
+
 
     def check_alive(self):
         if self.health <= 0:
@@ -39,7 +47,7 @@ class Slug(PlayableCharacter, pygame.sprite.Sprite):
     def shoot(self, bullet_group):
         if self.shoot_cooldown == 0 and self.ammo > 0:
             self.shoot_cooldown = 15
-            bullet = Bullet(self.rect.centerx + (0.6 * self.rect.size[0] * self.direction), (self.rect.centery - 12), self.direction, 'slug')
+            bullet = Bullet(self.rect.centerx + (0.8 * self.rect.size[0] * self.direction), (self.rect.centery - 11), self.direction, 'slug')
             bullet_group.add(bullet)
             #reduce ammo
             self.ammo -= 1
@@ -54,7 +62,26 @@ class Slug(PlayableCharacter, pygame.sprite.Sprite):
             self.grenade -= 1
 
     def update_animation(self):
-        pass
+        # update animation
+        animation_cooldown = 100
+
+        # update image depending on current frame
+        self.image = pygame.transform.scale(self.animation_list[self.action][self.sprite_index], (100, 75))
+
+        # check if enough time has passed since the last update
+        if pygame.time.get_ticks() - self.update_time > animation_cooldown:
+            self.update_time = pygame.time.get_ticks()
+            self.sprite_index += 1
+
+        # if the animation has run out then reset back to start
+        if self.sprite_index >= len(self.animation_list[self.action]):
+            self.sprite_index = 0
 
     def update_action(self, new_action):
-        pass
+        # check if the new action is different to the previous one
+        if new_action != self.action:
+            self.action = new_action
+
+            # update the animation settings
+            self.sprite_index = 0
+            self.update_time = pygame.time.get_ticks()

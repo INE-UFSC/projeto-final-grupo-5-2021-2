@@ -21,6 +21,8 @@ class Bullet(pygame.sprite.Sprite):
             self.image = bullet_img
         if self.type == 'slug':
             self.image = slug_bullet_img
+            if self.direction < 0:
+                self.image = pygame.transform.flip(self.image, True, False)
 
         self.rect = self.image.get_rect()
         self.rect.center = (x, y)
