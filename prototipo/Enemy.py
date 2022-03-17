@@ -35,6 +35,7 @@ class Enemy(pygame.sprite.Sprite):
         self.idling = False
         self.idling_counter = 0
         self.animation_index = 0
+        self.death_counter = 0
 
         if self.type == 'rebel':
             img = pygame.image.load('assets/RebelSoldier.png').convert_alpha()
@@ -89,6 +90,8 @@ class Enemy(pygame.sprite.Sprite):
         # update cooldown
         if self.shoot_cooldown > 0:
             self.shoot_cooldown -= 1
+
+        self.update_dead()
 
     def shoot(self, bullet_group):
         if self.shoot_cooldown == 0 and self.ammo > 0:
@@ -185,3 +188,10 @@ class Enemy(pygame.sprite.Sprite):
                     self.idling_counter -= 1
                     if self.idling_counter <= 0:
                         self.idling = False
+
+    def update_dead(self):
+        if self.alive is False:
+            self.death_counter += 1
+        if self.death_counter >= 45:
+            self.kill()
+
