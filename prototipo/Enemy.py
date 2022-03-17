@@ -3,7 +3,7 @@ import random
 from Bullet import Bullet, bullet_group
 
 class Enemy(pygame.sprite.Sprite):
-    def __init__(self, x, y, speed, ammo):
+    def __init__(self, x, y, speed, ammo, type):
             pygame.sprite.Sprite.__init__(self)
             self.alive = True
             self.speed = speed
@@ -17,19 +17,28 @@ class Enemy(pygame.sprite.Sprite):
             self.jump = False
             self.in_air = True
             self.flip = False
-            #ai specific variables
+            self.type = type
+            # ai specific variables
             self.move_counter = 0
             self.vision = pygame.Rect(0, 0, 150, 20)
             self.idling = False
             self.idling_counter = 0
-            
-            img = pygame.image.load('assets/RebelSoldier.png').convert_alpha()
-            self.image = pygame.transform.scale(img, (89, 77))
-            self.rect = self.image.get_rect()
-            self.rect.center = (x, y)
-            self.width = self.image.get_width()
-            self.height = self.image.get_height()
 
+            if self.type == 'human':
+                img = pygame.image.load('assets/RebelSoldier.png').convert_alpha()
+                self.image = pygame.transform.scale(img, (89, 77))
+                self.rect = self.image.get_rect()
+                self.rect.center = (x, y)
+                self.width = self.image.get_width()
+                self.height = self.image.get_height()
+
+            elif self.type == 'tank':
+                img = pygame.image.load('assets/enemy_tank.png').convert_alpha()
+                self.image = pygame.transform.scale(img, (75, 100))
+                self.rect = self.image.get_rect()
+                self.rect.center = (x, y)
+                self.width = self.image.get_width()
+                self.height = self.image.get_height()
 
     def draw(self, screen):
         screen.blit(pygame.transform.flip(self.image, self.flip, False), self.rect)
@@ -53,8 +62,12 @@ class Enemy(pygame.sprite.Sprite):
     def shoot(self, bullet_group):
         if self.shoot_cooldown == 0 and self.ammo > 0:
             self.shoot_cooldown = 20
-            bullet = Bullet(self.rect.centerx + (0.6 * self.rect.size[0] * self.direction), self.rect.centery, self.direction, 'human')
-            bullet_group.add(bullet)
+            if self.type == 'human':
+                bullet = Bullet(self.rect.centerx + (0.6 * self.rect.size[0] * self.direction), self.rect.centery, self.direction, 'human')
+                bullet_group.add(bullet)
+            elif self.type == 'tank':
+                bullet = Bullet(self.rect.centerx + (0.8 * self.rect.size[0] * self.direction), self.rect.centery - 11, self.direction, 'slug')
+                bullet_group.add(bullet)
             #reduce ammo
             self.ammo -= 1
 
@@ -82,8 +95,6 @@ class Enemy(pygame.sprite.Sprite):
 
         #apply gravity
         self.vel_y += 0.75
-        if self.vel_y > 10:
-            self.vel_y
         dy += self.vel_y
 
         for tile in game_map.tile_list:

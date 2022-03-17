@@ -45,20 +45,23 @@ class Map:
                     img_rect.y = y * self.tile_size
                     tile_data = (img, img_rect)
                     self.tile_list.append(tile_data)
-                elif tile == 1: #create player
+                elif tile == 1: # create player
                     player = Marco(200, 200, 5, 20, 5)
-                elif tile == 2: #create enemies
-                    enemy = Enemy(400, 200, 2, 10)
+                elif tile == 2: # create enemies
+                    enemy = Enemy(400, 200, 2, 10, 'human')
                     enemy_group.add(enemy)
-                elif tile == 3: #create ammo box
+                elif tile == 3: # create ammo box
                     pickable_item = PickableItem('Ammo', x * self.tile_size, y * self.tile_size, self.tile_size)
                     pickable_items_group.add(pickable_item)
-                elif tile == 4: #create grenade box
+                elif tile == 4: # create grenade box
                     pickable_item = PickableItem('Grenade', x * self.tile_size, y * self.tile_size, self.tile_size)
                     pickable_items_group.add(pickable_item)
                 elif tile == 5:
                     pickable_item = PickableItem('Slug', x * self.tile_size, y * self.tile_size, self.tile_size)
                     pickable_items_group.add(pickable_item)
+                elif tile == 6: # create tank enemies
+                    enemy = Enemy(600, 200, 2, 20, 'tank')
+                    enemy_group.add(enemy)
 
         return player, enemy_group, pickable_items_group
 
