@@ -1,11 +1,12 @@
-from pathlib import Path
-from tkinter import Tk, Canvas, Button, PhotoImage
-from MainMenuContainer import MainMenuContainer
+from tkinter import Tk
+from GUI.MainMenuContainer import MainMenuContainer
 
 class MainMenu():
-    def __init__(self):
+    def __init__(self, container=[]):
         self.window = Tk()
-        self.container = MainMenuContainer(self.window)
+        self.container = container
+        self.container_index = 0
+#        self.container = MainMenuContainer(self.window)
 
         #window geometry
         width = 800
@@ -23,7 +24,4 @@ class MainMenu():
 
     def main_menu_view(self):
         #window geometry
-        self.container.show_menu()
-
-main_menu = MainMenu()
-main_menu.main_menu_view()
+        self.container[self.container_index].show_menu()

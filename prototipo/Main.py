@@ -1,0 +1,12 @@
+from MainMenu import MainMenu
+from GUI.MainMissionContainer import MainMissionContainer
+from GUI.MainMenuContainer import MainMenuContainer
+
+main_menu = MainMenu()
+
+main_mission_container = MainMissionContainer(main_menu)
+main_menu_container = MainMenuContainer(main_menu)
+main_menu.container.append(main_menu_container)
+main_menu.container.append(main_mission_container)
+
+main_menu.main_menu_view()

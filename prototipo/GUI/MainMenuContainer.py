@@ -1,19 +1,20 @@
 from pathlib import Path
-from tkinter import Tk, Canvas, Button, PhotoImage
-from MainMissionContainer import MainMissionContainer
+from tkinter import Canvas, Button, PhotoImage
+from GUI.MainMissionContainer import MainMissionContainer
 
 class MainMenuContainer():
-    def __init__(self, window):
-        self.window = window
+    def __init__(self, main_menu):
+        self.main_menu = main_menu
+        self.window = self.main_menu.window
         self.output_path = Path(__file__).parent
         self.assets_path = self.output_path / Path("./assets")
-        self.main_mission_container = MainMissionContainer(self.window)
 
     def relative_to_assets(self, path: str) -> Path:
         return self.assets_path / Path(path)
 
     def main_mission_button_click(self):
-        self.main_mission_container.show_menu()
+        self.main_menu.container_index = 1
+        self.main_menu.main_menu_view()
     
     def quit_game_button_click(self):
         self.window.destroy()

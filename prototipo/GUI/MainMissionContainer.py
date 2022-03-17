@@ -1,15 +1,21 @@
 from pathlib import Path
-from tkinter import Tk, Canvas, Button, PhotoImage
+from tkinter import Canvas, Button, PhotoImage
 from Mission import Mission
 
 class MainMissionContainer():
-    def __init__(self, window):
-        self.window = window
+    def __init__(self, main_menu):
+        self.main_menu = main_menu
+        self.window = self.main_menu.window
         self.output_path = Path(__file__).parent
         self.assets_path = self.output_path / Path("./assets")
 
     def relative_to_assets(self, path: str) -> Path:
         return self.assets_path / Path(path)
+
+    def go_back_button_click(self):
+        self.window.destroy()
+        self.main_menu.container_index = 0
+        self.main_menu.main_menu_view()
 
     def easy_button_click(self):
         mission = Mission(0)
@@ -58,7 +64,7 @@ class MainMissionContainer():
         medium_button = Button( image=medium_button_image,
                                 borderwidth=0,
                                 highlightthickness=0,
-                                command=lambda: print("medium level"),
+                                command=lambda: self.go_back_button_click(),
                                 relief="flat")
         medium_button.place(x=527.0,
                             y=360.0,
