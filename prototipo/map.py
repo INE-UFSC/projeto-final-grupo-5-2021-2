@@ -50,7 +50,7 @@ class Map:
                 elif tile == 1: # create player
                     player = Marco(200, 200, 5, 20, 5)
                 elif tile == 2: # create enemies
-                    enemy = Enemy(400, 200, 2, 50, 'human')
+                    enemy = Enemy(400, 200, 2, 50, 'rebel')
                     enemy_group.add(enemy)
                 elif tile == 3: # create ammo box
                     pickable_item = PickableItem('Ammo', x * self.tile_size, y * self.tile_size, self.tile_size)

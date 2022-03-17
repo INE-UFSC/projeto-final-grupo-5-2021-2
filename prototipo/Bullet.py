@@ -14,6 +14,7 @@ class Bullet(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
         self.speed = 10
         self.direction = direction
+        self.enemy = False
         self.type = type
 
         #check who is shooting
@@ -36,13 +37,13 @@ class Bullet(pygame.sprite.Sprite):
             self.kill()
 
         if pygame.sprite.spritecollide(player, bullet_group, False):
-            if player.alive:
+            if player.alive and self.enemy:
                 player.health -= 5
                 self.kill()
 
         for enemy in enemy_group:
             if pygame.sprite.spritecollide(enemy, bullet_group, False):
-                if enemy.alive:
+                if enemy.alive and self.enemy is False:
                     enemy.health -= 25
                     print(enemy.health)
                     self.kill()
