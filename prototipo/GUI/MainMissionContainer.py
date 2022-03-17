@@ -1,23 +1,16 @@
-from pathlib import Path
 from tkinter import Canvas, Button, PhotoImage
 from Mission import Mission
-
-class MainMissionContainer():
+from GUI.Container import Container
+class MainMissionContainer(Container):
     def __init__(self, main_menu):
-        self.main_menu = main_menu
-        self.window = self.main_menu.window
-        self.output_path = Path(__file__).parent
-        self.assets_path = self.output_path / Path("./assets")
-
-    def relative_to_assets(self, path: str) -> Path:
-        return self.assets_path / Path(path)
+        super().__init__(main_menu)
 
     def go_back_button_click(self):
         self.main_menu.container_index = 0
         self.main_menu.main_menu_view()
 
     def easy_button_click(self):
-        mission = Mission(0)
+        mission = Mission(0, self.main_menu.volume_holder)
         self.window.destroy()
         mission.iniciar_partida()
 
