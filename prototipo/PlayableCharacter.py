@@ -23,6 +23,7 @@ class PlayableCharacter(pygame.sprite.Sprite):
         self.flip = False
         self.in_slug = False
         self.is_human = True
+        self.lives = 3
 
         #player action variables
         self.moving_left = False
@@ -49,7 +50,7 @@ class PlayableCharacter(pygame.sprite.Sprite):
 
         #assign movement variables if moving left or right
         if self.moving_left:
-            dx =- self.speed
+            dx = - self.speed
             self.flip = True
             self.direction = -1
         if self.moving_right:
