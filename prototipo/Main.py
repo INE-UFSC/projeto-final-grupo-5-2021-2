@@ -1,4 +1,4 @@
-from MainMenu import MainMenu
+from GUI.MainMenu import MainMenu
 from GUI.MainMissionContainer import MainMissionContainer
 from GUI.MainMenuContainer import MainMenuContainer
 

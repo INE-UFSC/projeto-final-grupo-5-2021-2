@@ -13,7 +13,6 @@ class MainMissionContainer():
         return self.assets_path / Path(path)
 
     def go_back_button_click(self):
-        self.window.destroy()
         self.main_menu.container_index = 0
         self.main_menu.main_menu_view()
 
@@ -76,6 +75,17 @@ class MainMissionContainer():
         logo = canvas.create_image( 637.0,
                                     143.0,
                                     image=metal_slug_logo)
+
+        go_back_button_image = PhotoImage(file=self.relative_to_assets("go_back_button.png"))
+        go_back_button = Button(image=go_back_button_image,
+                                borderwidth=0,
+                                highlightthickness=0,
+                                command=lambda: self.go_back_button_click(),
+                                relief="flat")
+        go_back_button.place(   x=34.0,
+                                y=34.0,
+                                width=65.0,
+                                height=65.0)
 
         self.window.resizable(False, False)
         self.window.mainloop()
