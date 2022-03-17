@@ -2,19 +2,9 @@ import pygame
 import random
 from Bullet import Bullet, bullet_group
 
-exp_fr_1 = pygame.image.load('assets/tank_exp/exp_fr1.png')
-exp_fr_2 = pygame.image.load('assets/tank_exp/exp_fr2.png')
-exp_fr_3 = pygame.image.load('assets/tank_exp/exp_fr3.png')
-exp_fr_4 = pygame.image.load('assets/tank_exp/exp_fr4.png')
-exp_fr_5 = pygame.image.load('assets/tank_exp/exp_fr5.png')
-exp_fr_6 = pygame.image.load('assets/tank_exp/exp_fr6.png')
-exp_fr_7 = pygame.image.load('assets/tank_exp/exp_fr7.png')
-
-explosion_animation = [exp_fr_1, exp_fr_2, exp_fr_3, exp_fr_4, exp_fr_5, exp_fr_6, exp_fr_7]
-
 
 class Enemy(pygame.sprite.Sprite):
-    def __init__(self, x, y, speed, ammo, type):
+    def __init__(self, x, y, speed, ammo):
         pygame.sprite.Sprite.__init__(self)
         self.alive = True
         self.speed = speed
@@ -28,7 +18,7 @@ class Enemy(pygame.sprite.Sprite):
         self.jump = False
         self.in_air = True
         self.flip = False
-        self.type = type
+
         # ai specific variables
         self.move_counter = 0
         self.vision = pygame.Rect(0, 0, 150, 20)
@@ -37,77 +27,28 @@ class Enemy(pygame.sprite.Sprite):
         self.animation_index = 0
         self.death_counter = 0
 
-        if self.type == 'rebel':
-            img = pygame.image.load('assets/RebelSoldier.png').convert_alpha()
-            self.image = pygame.transform.scale(img, (89, 77))
-            self.rect = self.image.get_rect()
-            self.rect.center = (x, y)
-            self.width = self.image.get_width()
-            self.height = self.image.get_height()
-
-        elif self.type == 'badass':
-            img = pygame.image.load('assets/EnemyBadAss.png').convert_alpha()
-            self.image = pygame.transform.scale(img, (89, 77))
-            self.rect = self.image.get_rect()
-            self.rect.center = (x, y)
-            self.width = self.image.get_width()
-            self.height = self.image.get_height()
-
-        elif self.type == 'tank':
-            self.vision = pygame.Rect(0, 0, 300, 20)
-            img = pygame.image.load('assets/enemy_tank.png').convert_alpha()
-            self.image = pygame.transform.scale(img, (75, 100))
-            self.rect = self.image.get_rect()
-            self.rect.center = (x, y)
-            self.width = self.image.get_width()
-            self.height = self.image.get_height()
-
+        self.width = None
+        self.height = None
 
     def draw(self, screen):
         screen.blit(pygame.transform.flip(self.image, self.flip, False), self.rect)
 
     def check_alive(self):
-        if self.health <= 0:
-            self.health = 0
-            self.speed = 0
-            self.alive = False
-            if self.type == "rebel":
-                img = pygame.image.load('assets/RebelSoldier_dead.png').convert_alpha()
-                self.image = pygame.transform.scale(img, (89, 77))
-            elif self.type == "badass":
-                img = pygame.image.load('assets/EnemyBadAss_dead.png').convert_alpha()
-                self.image = pygame.transform.scale(img, (89, 77))
-            elif self.type == "tank":
-                self.image = explosion_animation[int(self.animation_index)]
-                self.rect = self.image.get_rect(midbottom=(self.rect.midbottom))
-                self.animation_index += 0.2
-                if self.animation_index >= len(explosion_animation):
-                    self.animation_index = 0
-                    self.kill()
+        pass
 
     def update(self):
         self.check_alive()
         # update cooldown
         if self.shoot_cooldown > 0:
             self.shoot_cooldown -= 1
-
         self.update_dead()
 
     def shoot(self, bullet_group):
         if self.shoot_cooldown == 0 and self.ammo > 0:
             self.shoot_cooldown = 20
-            if self.type == 'rebel':
-                bullet = Bullet(self.rect.centerx + (0.6 * self.rect.size[0] * self.direction), self.rect.centery, self.direction, 'human')
-                bullet.enemy = True
-                bullet_group.add(bullet)
-            elif self.type == 'tank':
-                bullet = Bullet(self.rect.centerx + (0.9 * self.rect.size[0] * self.direction), self.rect.centery - 20, self.direction, 'slug')
-                bullet.enemy = True
-                bullet_group.add(bullet)
-            elif self.type == 'badass':
-                bullet = Bullet(self.rect.centerx + (0.6 * self.rect.size[0] * self.direction), self.rect.centery, self.direction, 'human')
-                bullet.enemy = True
-                bullet_group.add(bullet)
+            bullet = Bullet(self.rect.centerx + (0.6 * self.rect.size[0] * self.direction), self.rect.centery, self.direction, 'human')
+            bullet.enemy = True
+            bullet_group.add(bullet)
             # reduce ammo
             self.ammo -= 1
 
@@ -170,7 +111,7 @@ class Enemy(pygame.sprite.Sprite):
                 # shoot
                 self.shoot(bullet_group)
             else:
-                if self.idling == False:
+                if self.idling is False:
                     if self.direction == 1:
                         ai_moving_right = True
                     else:
@@ -194,4 +135,5 @@ class Enemy(pygame.sprite.Sprite):
             self.death_counter += 1
         if self.death_counter >= 45:
             self.kill()
+
 
