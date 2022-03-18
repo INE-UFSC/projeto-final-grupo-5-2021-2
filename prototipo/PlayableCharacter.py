@@ -322,6 +322,12 @@ class PlayableCharacter(pygame.sprite.Sprite):
         for x in range(self.ammo):
             screen.blit(bullet_img, (110 + (x*10), 60))
     
+    # displays player's grenade
+    def draw_grenades(self, screen):
+        grenade_img = pygame.image.load('assets/grenade.png').convert_alpha()
+        for x in range(self.grenade):
+            screen.blit(grenade_img, (130 + (x*15), 90))
+    
     def check_alive(self):
         if self.health <= 0:
             self.health = 0
