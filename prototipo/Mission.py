@@ -143,7 +143,7 @@ class Mission:
             grenade_group.update(game_map, player, enemy_group, self.volume)
             grenade_group.draw(screen)
             pickable_items_group.draw(screen)
-            pickable_items_group.update(player)
+            pickable_items_group.update(player, self.world_shift)
 
             #update player actions
             if player.alive:
