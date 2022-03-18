@@ -2,7 +2,7 @@ import pygame
 from pygame import mixer
 from PlayableCharacter import PlayableCharacter
 from Enemy import Enemy
-from map import Map
+from Map import Map
 from Bullet import bullet_group
 from Grenade import grenade_group
 from CurrentPlayer import CurrentPlayer

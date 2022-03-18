@@ -9,20 +9,116 @@ from PickableItem import PickableItem
 
 class Map:
     def __init__(self, level, background, screen_height, screen_width, rows, cols, sprite_list=[], tile_list=[], map_data=[]):
-        self.level = level
-        self.background = pygame.image.load('assets/background_1.png')
-        self.bg_rect = self.background.get_rect(topleft=(0, 0))
-        self.tile_list = tile_list
-        self.map_data = map_data
-        self.screen_height = screen_height
-        self.screen_width = screen_width
-        self.rows = rows
-        self.cols = cols
-        self.tile_size = screen_height//rows
-        self.sprite_list = sprite_list
+        self.__level = level
+        self.__background = pygame.image.load('assets/background_1.png')
+        self.__bg_rect = self.background.get_rect(topleft=(0, 0))
+        self.__tile_list = tile_list
+        self.__map_data = map_data
+        self.__screen_height = screen_height
+        self.__screen_width = screen_width
+        self.__rows = rows
+        self.__cols = cols
+        self.__tile_size = screen_height//rows
+        self.__sprite_list = sprite_list
         img = pygame.image.load(f'assets/tiles/0.png').convert_alpha()
         sprite_list.append(img)
+    
+    @property
+    def level(self):
+        return self.__level
+        
+    @level.setter
+    def level(self, new_level):
+        self.__level = new_level
+    
+    @property
+    def background(self):
+        return self.__background
+        
+    @background.setter
+    def background(self, new_background):
+        self.__background = new_background
+    
+    @property
+    def bg_rect(self):
+        return self.__bg_rect
+        
+    @bg_rect.setter
+    def bg_rect(self, new_bg_rect):
+            self.__bg_rect = new_bg_rect
+    
+    @property
+    def tile_list(self):
+        return self.__tile_list
+        
+    @tile_list.setter
+    def tile_list(self, new_tile_list: list):
+        if isinstance(new_tile_list, list):
+            self.__tile_list = new_tile_list
+    
+    @property
+    def map_data(self):
+        return self.__map_data
+        
+    @map_data.setter
+    def map_data(self, new_map_data: list):
+        if isinstance(new_map_data, list):
+            self.__map_data = new_map_data
+    
+    @property
+    def screen_height(self):
+        return self.__screen_height
+        
+    @screen_height.setter
+    def screen_height(self, new_screen_height: float):
+        self.__screen_height = new_screen_height
 
+    @property
+    def screen_width(self):
+        return self.__screen_width
+        
+    @screen_width.setter
+    def screen_width(self, new_screen_width: int):
+        if isinstance(new_screen_width, int):
+            self.__screen_width = new_screen_width
+    
+    @property
+    def rows(self):
+        return self.__rows
+    
+    @rows.setter
+    def rows(self, new_rows: int):
+        if isinstance(new_rows, int):
+            self.__rows = new_rows
+    
+    @property
+    def cols(self):
+        return self.__cols
+    
+    @cols.setter
+    def cols(self, new_cols: int):
+        if isinstance(new_cols, int):
+            self.__cols = new_cols
+    
+    @property
+    def tile_size(self):
+        return self.__tile_size
+    
+    @tile_size.setter
+    def tile_size(self, new_tile_size: int):
+        if isinstance(new_tile_size, int):
+            self.__tile_size = new_tile_size
+    
+    @property
+    def sprite_list(self):
+        return self.__sprite_list
+        
+    @sprite_list.setter
+    def sprite_list(self, new_sprite_list: list):
+        if isinstance(new_sprite_list, list):
+            self.__sprite_list = new_sprite_list
+
+# End of getters and setters  
 
     def load_data(self):
         for row in range(self.rows):
