@@ -185,8 +185,7 @@ class Enemy(pygame.sprite.Sprite):
         
     @animation_index.setter
     def animation_index(self, new_animation_index: int):
-        if isinstance(new_animation_index, int):
-            self.__animation_index = new_animation_index
+        self.__animation_index = new_animation_index
     
 
     @property

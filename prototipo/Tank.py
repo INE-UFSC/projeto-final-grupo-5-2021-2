@@ -17,15 +17,32 @@ class Tank(Enemy, pygame.sprite.Sprite):
     def __init__(self, x, y, speed, ammo):
         super().__init__(x, y, speed, ammo)
         pygame.sprite.Sprite.__init__(self)
-        self.vision = pygame.Rect(0, 0, 300, 20)
+        self.__vision = pygame.Rect(0, 0, 300, 20)
 
         # sprites
         img = pygame.image.load('assets/enemy_tank.png').convert_alpha()
         self.image = pygame.transform.scale(img, (75, 100))
         self.rect = self.image.get_rect()
         self.rect.center = (x, y)
-        self.width = self.image.get_width()
-        self.height = self.image.get_height()
+        self.__width = self.image.get_width()
+        self.__height = self.image.get_height()
+    
+
+    @property
+    def vision(self):
+        return self.__vision
+        
+        
+    @property
+    def width(self):
+        return self.__width
+
+
+    @property
+    def height(self):
+        return self.__height
+
+# End of getters and setters
 
     def check_alive(self):
         if self.health <= 0:
