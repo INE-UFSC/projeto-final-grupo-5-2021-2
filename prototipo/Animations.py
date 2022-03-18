@@ -3,7 +3,6 @@ import pygame
 
 animation_list = []
 
-
 class Animations():
     def __init__(self, path):
         self.path = path

@@ -6,7 +6,6 @@ import pygame
 import csv
 from PickableItem import PickableItem
 
-
 class Map:
     def __init__(self, level, background, screen_height, screen_width, rows, cols, sprite_list=[], tile_list=[], map_data=[]):
         self.level = level
@@ -73,3 +72,8 @@ class Map:
 
     def draw_bg(self, screen):
         screen.blit(self.background, (0, 0))
+'''
+    def draw(self, screen):
+        for tile in self.tile_list:
+            screen.blit(tile[0], tile[1])
+'''

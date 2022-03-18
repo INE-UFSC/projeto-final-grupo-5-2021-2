@@ -2,13 +2,13 @@ import pygame
 from PlayableCharacter import PlayableCharacter
 from Enemy import Enemy
 from map import Map
+#from map_test import tile_map
 from Bullet import bullet_group
 from Grenade import grenade_group
 from CurrentPlayer import CurrentPlayer
 
 screen_height = 600
 screen_width = 800
-
 
 class Mission():
     def __init__(self, level, volume=7):
@@ -32,7 +32,16 @@ class Mission():
         BG = (144, 201, 120)
         RED = (255, 0, 0)
         BROWN = (110, 38, 14)
-     
+        '''
+        def draw_map(current_map):
+            screen.fill(BG)
+            
+            for y in range(len(current_map)):
+                for x in range(len(current_map[y])):
+                    if current_map[y][x] == 'X':
+                        rect = pygame.Rect(x*50, y*50, 50, 50)
+                        pygame.draw.rect(screen, BROWN, rect)
+        '''   
         game_map = Map(self.level, 'background_1', screen_height, screen_width, 16, 150)
         #player = PlayableCharacter(200, 200, 5, 20, 5)
         #enemy = Enemy(400, 200, 5, 20)
@@ -91,6 +100,8 @@ class Mission():
                     player.throw_grenade(grenade_group)
                 elif player.in_air:
                     player.update_action(0)#2: jump
+#              elif player.moving_left or player.moving_right:
+#                   player.update_action()#1: run
                 else:
                     player.update_action(2)#0: idle
                 player.move(game_map)
