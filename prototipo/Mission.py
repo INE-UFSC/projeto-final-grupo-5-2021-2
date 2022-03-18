@@ -5,7 +5,7 @@ from Map import Map
 from Bullet import bullet_group
 from Grenade import grenade_group
 from CurrentPlayer import CurrentPlayer
-from Menu import Menu
+
 
 screen_height = 600
 screen_width = 800
@@ -143,7 +143,7 @@ class Mission:
             grenade_group.update(game_map, player, enemy_group, self.volume)
             grenade_group.draw(screen)
             pickable_items_group.draw(screen)
-            pickable_items_group.update(player, self.world_shift)
+            pickable_items_group.update(player)
 
             #update player actions
             if player.alive:
@@ -157,15 +157,11 @@ class Mission:
                 else:
                     player.update_action(2)#0: idle
                 player.move(game_map)
-
-            if player.lives < 0:
-                run = False
-
+    
             for event in pygame.event.get():
                 #quit game
                 if event.type == pygame.QUIT:
-                    menu = Menu()
-                    menu.create_menu(3)
+                    run = False
 
                 #keyboard presses
                 if event.type == pygame.KEYDOWN:

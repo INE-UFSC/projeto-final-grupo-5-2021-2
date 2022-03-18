@@ -1,11 +1,12 @@
 from tkinter import Tk
 
 class MainMenu():
-    def __init__(self, container_index=0, container=[]):
+    def __init__(self, container=[]):
         self.window = Tk()
         self.container = container
-        self.container_index = container_index
+        self.container_index = 0
         self.volume_holder = 0.3
+#        self.container = MainMenuContainer(self.window)
 
         #window geometry
         width = 800
@@ -18,6 +19,8 @@ class MainMenu():
 
         #title and icon
         self.window.title("Metal Slug")
+#        icon = self.relative_to_assets('icon_marco.ico')
+#       self.window.iconbitmap(icon)
 
     def main_menu_view(self):
         #window geometry
