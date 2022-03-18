@@ -11,8 +11,9 @@ screen_height = 600
 screen_width = 800
 
 class Mission():
-    def __init__(self, level):
+    def __init__(self, level, volume=7):
         self.level = level
+        self.volume = volume
 
     def iniciar_partida(self):
         pygame.init()

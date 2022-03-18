@@ -1,41 +1,23 @@
-from pathlib import Path
-from tkinter import Tk, Canvas, Button, PhotoImage
-from MainMissionMenu import MainMissionMenu
+from tkinter import Canvas, Button, PhotoImage
+from typing import Container
+from GUI.Container import Container
 
-class MainMenu():
-    def __init__(self):
-        self.window = Tk()
-        self.output_path = Path(__file__).parent
-        self.assets_path = self.output_path / Path("./assets")
-
-    def relative_to_assets(self, path: str) -> Path:
-        return self.assets_path / Path(path)
+class MainMenuContainer(Container):
+    def __init__(self, main_menu):
+        super().__init__(main_menu)
 
     def main_mission_button_click(self):
-        self.window.forget()
-        MainMissionMenu().main_mission_menu_view()
+        self.main_menu.container_index = 1
+        self.main_menu.main_menu_view()
     
     def quit_game_button_click(self):
         self.window.destroy()
 
     def settings_button_click(self):
-        self.window.destroy()
+        self.main_menu.container_index = 2
+        self.main_menu.main_menu_view()
 
-    def main_menu_view(self):
-        #window geometry
-        width = 800
-        height = 600
-        width_screen = self.window.winfo_screenwidth()
-        height_screen = self.window.winfo_screenheight()
-        posx = int(width_screen/2 - width/2)
-        posy = int(height_screen/2 - height/2)
-        self.window.geometry(f"{width}x{height}+{posx}+{posy}")
-
-        #title and icon
-        self.window.title("Metal Slug")
-        icon = self.relative_to_assets('icon_marco.ico')
-        self.window.iconbitmap(icon)
-
+    def show_menu(self):
         #canvas
         canvas = Canvas(self.window,
                         bg = "#FFFFFF",
@@ -97,6 +79,3 @@ class MainMenu():
                                     
         self.window.resizable(False, False)
         self.window.mainloop()
-
-main_menu = MainMenu()
-main_menu.main_menu_view()

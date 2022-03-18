@@ -1,35 +1,20 @@
-from pathlib import Path
-from tkinter import Tk, Canvas, Button, PhotoImage
+from tkinter import Canvas, Button, PhotoImage
 from Mission import Mission
+from GUI.Container import Container
+class MainMissionContainer(Container):
+    def __init__(self, main_menu):
+        super().__init__(main_menu)
 
-class MainMissionMenu():
-    def __init__(self):
-        self.window = Tk()
-        self.output_path = Path(__file__).parent
-        self.assets_path = self.output_path / Path("./assets")
-
-    def relative_to_assets(self, path: str) -> Path:
-        return self.assets_path / Path(path)
+    def go_back_button_click(self):
+        self.main_menu.container_index = 0
+        self.main_menu.main_menu_view()
 
     def easy_button_click(self):
-        mission = Mission(0)
+        mission = Mission(0, self.main_menu.volume_holder)
+        self.window.destroy()
         mission.iniciar_partida()
 
-    def main_mission_menu_view(self):
-        #window geometry
-        width = 800
-        height = 600
-        width_screen = self.window.winfo_screenwidth()
-        height_screen = self.window.winfo_screenheight()
-        posx = int(width_screen/2 - width/2)
-        posy = int(height_screen/2 - height/2)
-        self.window.geometry(f"{width}x{height}+{posx}+{posy}")
-
-        #title and icon
-        self.window.title("Metal Slug")
-        icon = self.relative_to_assets('icon_marco.ico')
-        self.window.iconbitmap(icon)
-
+    def show_menu(self):
         canvas = Canvas(self.window,
                         bg = "#FFFFFF",
                         height = 600,
@@ -71,7 +56,7 @@ class MainMissionMenu():
         medium_button = Button( image=medium_button_image,
                                 borderwidth=0,
                                 highlightthickness=0,
-                                command=lambda: print("medium level"),
+                                command=lambda: self.go_back_button_click(),
                                 relief="flat")
         medium_button.place(x=527.0,
                             y=360.0,
@@ -84,8 +69,16 @@ class MainMissionMenu():
                                     143.0,
                                     image=metal_slug_logo)
 
+        go_back_button_image = PhotoImage(file=self.relative_to_assets("go_back_button.png"))
+        go_back_button = Button(image=go_back_button_image,
+                                borderwidth=0,
+                                highlightthickness=0,
+                                command=lambda: self.go_back_button_click(),
+                                relief="flat")
+        go_back_button.place(   x=34.0,
+                                y=34.0,
+                                width=65.0,
+                                height=65.0)
+
         self.window.resizable(False, False)
         self.window.mainloop()
-
-main_mission_menu = MainMissionMenu()
-main_mission_menu.main_mission_menu_view()
