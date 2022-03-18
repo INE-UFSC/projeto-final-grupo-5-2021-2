@@ -12,8 +12,16 @@ class Rebel(Enemy, pygame.sprite.Sprite):
         self.image = pygame.transform.scale(img, (89, 77))
         self.rect = self.image.get_rect()
         self.rect.center = (x, y)
-        self.width = self.image.get_width()
-        self.height = self.image.get_height()
+        self.__width = self.image.get_width()
+        self.__height = self.image.get_height()
+    
+    @property
+    def width(self):
+        return self.__width
+
+    @property
+    def height(self):
+        return self.__height
 
     def check_alive(self):
         if self.health <= 0:

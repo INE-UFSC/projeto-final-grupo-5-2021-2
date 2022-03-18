@@ -83,8 +83,7 @@ class Enemy(pygame.sprite.Sprite):
         
     @health.setter
     def health(self, new_health: int):
-        if isinstance(new_health, int):
-            self.__health = new_health
+        self.__health = new_health
 
 
     @property
