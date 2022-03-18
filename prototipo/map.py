@@ -10,7 +10,8 @@ from PickableItem import PickableItem
 class Map:
     def __init__(self, level, background, screen_height, screen_width, rows, cols, sprite_list=[], tile_list=[], map_data=[]):
         self.level = level
-        self.background = pygame.Surface((800, 600))
+        self.background = pygame.image.load('assets/background_1.png')
+        self.bg_rect = self.background.get_rect(topleft=(0, 0))
         self.tile_list = tile_list
         self.map_data = map_data
         self.screen_height = screen_height
@@ -76,6 +77,7 @@ class Map:
             tile[1].x += speed_x
 
     def draw_bg(self, screen):
-        screen.blit(self.background, (0, 0))
-        for tile in self.tile_list:
-            screen.blit(tile[0], tile[1])
+        screen.blit(self.background, self.bg_rect)
+
+    def bg_update(self, speed_x):
+        self.bg_rect.x += speed_x

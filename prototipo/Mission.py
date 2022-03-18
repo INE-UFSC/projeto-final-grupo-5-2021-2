@@ -64,6 +64,7 @@ class Mission():
             game_map.draw_bg(screen)
         #    game_map.draw(screen)
             game_map.update_map(self.world_shift)
+            game_map.bg_update(self.world_shift)
             
             player.health_bar(screen)
 
@@ -77,10 +78,10 @@ class Mission():
             player.draw(screen)
             player_x = player.rect.centerx
             direction_x = player.direction_x
-            if player_x < screen_width / 4 and direction_x < 0:
+            if player_x < screen_width / 5 and direction_x < 0:
                 self.world_shift = 5
                 player.speed = 0
-            elif player_x > screen_width - (screen_width / 4) and direction_x > 0:
+            elif player_x > screen_width - (screen_width / 5) and direction_x > 0:
                 self.world_shift = -5
                 player.speed = 0
             else:
