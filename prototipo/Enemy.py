@@ -7,29 +7,216 @@ from RegularBullet import RegularBullet
 class Enemy(pygame.sprite.Sprite):
     def __init__(self, x, y, speed, ammo):
         pygame.sprite.Sprite.__init__(self)
-        self.alive = True
-        self.speed = speed
-        self.ammo = ammo
-        self.start_ammo = ammo
-        self.shoot_cooldown = 0
-        self.health = 100
-        self.max_health = self.health
-        self.direction = 1
-        self.vel_y = 0
-        self.jump = False
-        self.in_air = True
-        self.flip = False
+        self.__alive = True
+        self.__speed = speed
+        self.__ammo = ammo
+        self.__start_ammo = ammo
+        self.__shoot_cooldown = 0
+        self.__health = 100
+        self.__max_health = self.health
+        self.__direction = 1
+        self.__vel_y = 0
+        self.__jump = False
+        self.__in_air = True
+        self.__flip = False
 
         # ai specific variables
-        self.move_counter = 0
-        self.vision = pygame.Rect(0, 0, 150, 20)
-        self.idling = False
-        self.idling_counter = 0
-        self.animation_index = 0
-        self.death_counter = 0
+        self.__move_counter = 0
+        self.__vision = pygame.Rect(0, 0, 150, 20)
+        self.__idling = False
+        self.__idling_counter = 0
+        self.__animation_index = 0
+        self.__death_counter = 0
 
-        self.width = None
-        self.height = None
+        self.__width = None
+        self.__height = None
+
+
+    @property
+    def alive(self):
+        return self.__alive
+        
+    @alive.setter
+    def alive(self, new_alive: bool):
+        if isinstance(new_alive, bool):
+            self.__alive = new_alive
+
+
+    @property
+    def speed(self):
+        return self.__speed
+        
+    @speed.setter
+    def speed(self, new_speed: int):
+        if isinstance(new_speed, int):
+            self.__speed = new_speed
+
+
+    @property
+    def ammo(self):
+        return self.__ammo
+        
+    @ammo.setter
+    def ammo(self, new_ammo: int):
+        if isinstance(new_ammo, int):
+            self.__ammo = new_ammo
+
+
+    @property
+    def start_ammo(self):
+        return self.__start_ammo
+
+
+    @property
+    def shoot_cooldown(self):
+        return self.__shoot_cooldown
+        
+    @shoot_cooldown.setter
+    def shoot_cooldown(self, new_shoot_cooldown: int):
+        if isinstance(new_shoot_cooldown, int):
+            self.__shoot_cooldown = new_shoot_cooldown
+
+
+    @property
+    def health(self):
+        return self.__health
+        
+    @health.setter
+    def health(self, new_health: int):
+        if isinstance(new_health, int):
+            self.__health = new_health
+
+
+    @property
+    def max_health(self):
+        return self.__max_health
+
+
+    @property
+    def direction(self):
+        return self.__direction
+        
+    @direction.setter
+    def direction(self, new_direction: int):
+        if isinstance(new_direction, int):
+            self.__direction = new_direction
+    
+
+    @property
+    def vel_y(self):
+        return self.__vel_y
+        
+    @vel_y.setter
+    def vel_y(self, new_vel_y: float):
+        self.__vel_y = new_vel_y
+
+
+    @property
+    def jump(self):
+        return self.__jump
+        
+    @jump.setter
+    def jump(self, new_jump: bool):
+        if isinstance(new_jump, bool):
+            self.__jump = new_jump
+
+
+    @property
+    def in_air(self):
+        return self.__in_air
+        
+    @in_air.setter
+    def in_air(self, new_in_air: bool):
+        if isinstance(new_in_air, bool):
+            self.__in_air = new_in_air
+
+
+    @property
+    def flip(self):
+        return self.__flip
+        
+    @flip.setter
+    def flip(self, new_flip: bool):
+        if isinstance(new_flip, bool):
+            self.__flip = new_flip
+    
+
+    @property
+    def move_counter(self):
+        return self.__move_counter
+        
+    @move_counter.setter
+    def move_counter(self, new_move_counter: int):
+        if isinstance(new_move_counter, int):
+            self.__move_counter = new_move_counter
+    
+
+    @property
+    def vision(self):
+        return self.__vision
+        
+    @vision.setter
+    def vision(self, new_vision):
+        self.__vision = new_vision
+        
+
+    @property
+    def idling(self):
+        return self.__idling
+        
+    @idling.setter
+    def idling(self, new_idling: bool):
+        self.__idling = new_idling
+
+
+    @property
+    def idling_counter(self):
+        return self.__idling_counter
+        
+    @idling_counter.setter
+    def idling_counter(self, new_idling_counter: int):
+        if isinstance(new_idling_counter, int):
+            self.__idling_counter = new_idling_counter
+    
+
+    @property
+    def animation_index(self):
+        return self.__animation_index
+        
+    @animation_index.setter
+    def animation_index(self, new_animation_index: int):
+        if isinstance(new_animation_index, int):
+            self.__animation_index = new_animation_index
+    
+
+    @property
+    def death_counter(self):
+        return self.__death_counter
+        
+    @death_counter.setter
+    def death_counter(self, new_death_counter: int):
+        if isinstance(new_death_counter, int):
+            self.__death_counter = new_death_counter
+    
+
+    @property
+    def width(self):
+        return self.__width
+    
+    @width.setter
+    def width(self, new_width):
+        self.__width = new_width
+        
+
+    @property
+    def height(self):
+        return self.__height
+    
+    @height.setter
+    def height(self, new_height):
+        self.__height = new_height
+
+# End of getters and setters
 
     def draw(self, screen):
         screen.blit(pygame.transform.flip(self.image, self.flip, False), self.rect)
