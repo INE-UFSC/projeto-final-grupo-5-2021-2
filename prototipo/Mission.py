@@ -17,9 +17,35 @@ bg_scroll = 0
 
 class Mission():
     def __init__(self, level, volume=5):
-        self.level = level
-        self.volume = volume
-        self.world_shift = 0
+        self.__level = level
+        self.__volume = volume
+        self.__world_shift = 0
+    
+    @property
+    def level(self):
+        return self.__level
+        
+    @level.setter
+    def level(self, new_level):
+        self.__level = new_level
+    
+    @property
+    def volume(self):
+        return self.__volume
+        
+    @volume.setter
+    def volume(self, new_volume):
+        self.__volume = new_volume
+    
+    @property
+    def world_shift(self):
+        return self.__world_shift
+        
+    @world_shift.setter
+    def world_shift(self, new_world_shift):
+        self.__world_shift = new_world_shift
+
+# End of getters and setters
 
     def iniciar_partida(self):
         pygame.init()
