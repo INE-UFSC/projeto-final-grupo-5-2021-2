@@ -1,7 +1,8 @@
 import pygame
-from Bullet import Bullet
+from RegularBullet import RegularBullet
 from Grenade import Grenade
 from abc import abstractmethod
+
 
 class PlayableCharacter(pygame.sprite.Sprite):
     def __init__(self, x, y, speed, ammo, grenade):
@@ -89,9 +90,9 @@ class PlayableCharacter(pygame.sprite.Sprite):
 
     def shoot(self, bullet_group):
         if self.shoot_cooldown == 0 and self.ammo > 0:
-#            self.update_action(1)
+#           self.update_action(1)
             self.shoot_cooldown = 20
-            bullet = Bullet(self.rect.centerx + (0.6 * self.rect.size[0] * self.direction), self.rect.centery, self.direction, 'human')
+            bullet = RegularBullet(self.rect.centerx + (0.6 * self.rect.size[0] * self.direction), self.rect.centery, self.direction)
             bullet_group.add(bullet)
             #reduce ammo
             self.ammo -= 1

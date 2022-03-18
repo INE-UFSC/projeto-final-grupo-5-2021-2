@@ -28,7 +28,6 @@ class Marco(PlayableCharacter, pygame.sprite.Sprite):
         self.update_time = pygame.time.get_ticks()
         self.image = self.animation_list[self.action][self.sprite_index]
 
-
     def revive(self):
         if self.lives > 0:
             self.image = revive_sprite_list[int(self.revive_index)]
