@@ -74,7 +74,7 @@ class Mission:
         #define font
         font = pygame.font.Font('assets/Pixeltype.ttf', 50)
      
-        game_map = Map(self.level, 'background_1', screen_height, screen_width, 16, 150)
+        game_map = Map(self.level, 'background_1', screen_height, screen_width, 16, 365)
         #player = PlayableCharacter(200, 200, 5, 20, 5)
         #enemy = Enemy(400, 200, 5, 20)
         game_map.load_data()
@@ -86,9 +86,7 @@ class Mission:
 
             clock.tick(FPS)
 
-        #   draw_map(tile_map)
             game_map.draw_bg(screen)
-        #    game_map.draw(screen)
             game_map.update_map(self.world_shift)
             game_map.bg_update(self.world_shift)
             
@@ -140,7 +138,7 @@ class Mission:
                 enemy.ai(player, game_map, self.world_shift)
 
             #update and draw groups
-            bullet_group.update(player, bullet_group, enemy_group)
+            bullet_group.update(player, bullet_group, enemy_group, self.world_shift)
             bullet_group.draw(screen)
             grenade_group.update(game_map, player, enemy_group, self.volume)
             grenade_group.draw(screen)

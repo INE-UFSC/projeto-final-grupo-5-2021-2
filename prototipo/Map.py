@@ -10,7 +10,7 @@ from PickableItem import PickableItem
 class Map:
     def __init__(self, level, background, screen_height, screen_width, rows, cols, sprite_list=[], tile_list=[], map_data=[]):
         self.__level = level
-        self.__background = pygame.image.load('assets/background_1.png')
+        self.__background = pygame.image.load('assets/background_3.jpg')
         self.__bg_rect = self.background.get_rect(topleft=(0, 0))
         self.__tile_list = tile_list
         self.__map_data = map_data
@@ -160,10 +160,10 @@ class Map:
                     pickable_item = PickableItem('Slug', x * self.tile_size, y * self.tile_size, self.tile_size)
                     pickable_items_group.add(pickable_item)
                 elif tile == 6:  # create tank enemies
-                    enemy = Tank(600, 200, 2, 50)
+                    enemy = Tank(x * self.tile_size, y * self.tile_size, 2, 50)
                     enemy_group.add(enemy)
                 elif tile == 7:  # create badass enemies
-                    enemyB = Badass(500, 200, 2, 50)
+                    enemyB = Badass(x * self.tile_size, y * self.tile_size, 2, 50)
                     enemy_group.add(enemyB)
 
         return player, enemy_group, pickable_items_group

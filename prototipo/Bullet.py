@@ -46,9 +46,9 @@ class Bullet(pygame.sprite.Sprite):
 
 # End of getters and setters
 
-    def update(self, player, bullet_group, enemy_group):
+    def update(self, player, bullet_group, enemy_group, screen_scroll):
         # move bullet
-        self.rect.x += (self.direction * self.speed)
+        self.rect.x += (self.direction * self.speed) + screen_scroll
 
         # check if bullet has gone off screen
         if self.rect.right < 0 or self.rect.left > 800:
