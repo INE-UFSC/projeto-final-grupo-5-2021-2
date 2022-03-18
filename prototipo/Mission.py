@@ -76,6 +76,9 @@ class Mission():
 
             player.update()
             player.draw(screen)
+
+            # check which direction the screen should move
+
             player_x = player.rect.centerx
             direction_x = player.direction_x
 
