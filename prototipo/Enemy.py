@@ -286,7 +286,7 @@ class Enemy(pygame.sprite.Sprite):
         self.rect.x += dx
         self.rect.y += dy
 
-    def ai(self, player, game_map):
+    def ai(self, player, game_map, scroll):
         if self.alive and player.alive:
             if self.idling == False and random.randint(1, 200) == 1:
                 self.idling = True
@@ -315,6 +315,8 @@ class Enemy(pygame.sprite.Sprite):
                     self.idling_counter -= 1
                     if self.idling_counter <= 0:
                         self.idling = False
+
+        self.rect.x += scroll
 
     def update_dead(self):
         if self.alive is False:

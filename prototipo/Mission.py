@@ -137,7 +137,7 @@ class Mission:
             for enemy in enemy_group:
                 enemy.update()
                 enemy.draw(screen)
-                enemy.ai(player, game_map)
+                enemy.ai(player, game_map, self.world_shift)
 
             #update and draw groups
             bullet_group.update(player, bullet_group, enemy_group)

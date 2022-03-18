@@ -148,7 +148,7 @@ class Map:
                 elif tile == 1:  # create player
                     player = Marco(200, 200, 5, 20, 5)
                 elif tile == 2:  # create enemies
-                    enemy = Rebel(400, 200, 2, 50)
+                    enemy = Rebel(x * self.tile_size, y * self.tile_size, 2, 50)
                     enemy_group.add(enemy)
                 elif tile == 3:  # create ammo box
                     pickable_item = PickableItem('Ammo', x * self.tile_size, y * self.tile_size, self.tile_size)
@@ -171,7 +171,7 @@ class Map:
     # method for tile scroll
     def update_map(self, speed_x):
         for tile in self.tile_list:
-            tile[1].x += speed_x
+            tile[1][0] += speed_x
 
     def draw_bg(self, screen):
         screen.blit(self.background, self.bg_rect)
