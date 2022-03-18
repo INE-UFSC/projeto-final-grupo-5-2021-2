@@ -71,7 +71,8 @@ class Map:
                     enemy_group.add(enemyB)
 
         return player, enemy_group, pickable_items_group
-    
+
+    # method for tile scroll
     def update_map(self, speed_x):
         for tile in self.tile_list:
             tile[1].x += speed_x
@@ -79,5 +80,6 @@ class Map:
     def draw_bg(self, screen):
         screen.blit(self.background, self.bg_rect)
 
+    # method for background scroll
     def bg_update(self, speed_x):
         self.bg_rect.x += speed_x
