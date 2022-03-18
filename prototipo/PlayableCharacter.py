@@ -7,34 +7,234 @@ from abc import abstractmethod
 class PlayableCharacter(pygame.sprite.Sprite):
     def __init__(self, x, y, speed, ammo, grenade):
         pygame.sprite.Sprite.__init__(self)
-        self.alive = True
-        self.speed = speed
-        self.ammo = ammo
-        self.start_ammo = ammo
-        self.grenade = grenade
-        self.start_grenade = grenade
-        self.shoot_cooldown = 0
-        self.grenade_thrown = False
-        self.health = 100
-        self.max_health = self.health
-        self.direction = 1
-        self.vel_y = 0
-        self.jump = False
-        self.in_air = True
-        self.flip = False
-        self.in_slug = False
-        self.is_human = True
-        self.lives = 3
+        self.__alive = True
+        self.__speed = speed
+        self.__ammo = ammo
+        self.__start_ammo = ammo
+        self.__grenade = grenade
+        self.__start_grenade = grenade
+        self.__shoot_cooldown = 0
+        self.__grenade_thrown = False
+        self.__health = 100
+        self.__max_health = self.health
+        self.__direction = 1
+        self.__vel_y = 0
+        self.__jump = False
+        self.__in_air = True
+        self.__flip = False
+        self.__in_slug = False
+        self.__is_human = True
+        self.__lives = 3
 
         #player action variables
-        self.moving_left = False
-        self.moving_right = False
-        self.shooting = False
-        self.throwing = False
+        self.__moving_left = False
+        self.__moving_right = False
+        self.__shooting = False
+        self.__throwing = False
 
-        #load all images for the players
-        self.width = None
-        self.height = None
+
+    @property
+    def alive(self):
+        return self.__alive
+        
+    @alive.setter
+    def alive(self, new_alive: bool):
+        if isinstance(new_alive, bool):
+            self.__alive = new_alive
+
+
+    @property
+    def speed(self):
+        return self.__speed
+        
+    @speed.setter
+    def speed(self, new_speed: int):
+        if isinstance(new_speed, int):
+            self.__speed = new_speed
+
+
+    @property
+    def ammo(self):
+        return self.__ammo
+        
+    @ammo.setter
+    def ammo(self, new_ammo: int):
+        if isinstance(new_ammo, int):
+            self.__ammo = new_ammo
+
+
+    @property
+    def start_ammo(self):
+        return self.__start_ammo
+        
+
+    @property
+    def grenade(self):
+        return self.__grenade
+        
+    @grenade.setter
+    def grenade(self, new_grenade: int):
+        if isinstance(new_grenade, int):
+            self.__grenade = new_grenade
+    
+
+    @property
+    def start_grenade(self):
+        return self.__start_grenade
+        
+    
+    @property
+    def shoot_cooldown(self):
+        return self.__shoot_cooldown
+        
+    @shoot_cooldown.setter
+    def shoot_cooldown(self, new_shoot_cooldown: int):
+        if isinstance(new_shoot_cooldown, int):
+            self.__shoot_cooldown = new_shoot_cooldown
+
+    @property
+    def grenade_thrown(self):
+        return self.__grenade_thrown
+        
+    @grenade_thrown.setter
+    def grenade_thrown(self, new_grenade_thrown: bool):
+        if isinstance(new_grenade_thrown, bool):
+            self.__grenade_thrown = new_grenade_thrown
+            
+    @property
+    def health(self):
+        return self.__health
+        
+    @health.setter
+    def health(self, new_health: int):
+        if isinstance(new_health, int):
+            self.__health = new_health
+
+
+    @property
+    def max_health(self):
+        return self.__max_health
+
+
+    @property
+    def direction(self):
+        return self.__direction
+        
+    @direction.setter
+    def direction(self, new_direction: int):
+        if isinstance(new_direction, int):
+            self.__direction = new_direction
+
+
+    @property
+    def vel_y(self):
+        return self.__vel_y
+        
+    @vel_y.setter
+    def vel_y(self, new_vel_y: float):
+        self.__vel_y = new_vel_y
+
+
+    @property
+    def jump(self):
+        return self.__jump
+        
+    @jump.setter
+    def jump(self, new_jump: bool):
+        if isinstance(new_jump, bool):
+            self.__jump = new_jump
+
+
+    @property
+    def in_air(self):
+        return self.__in_air
+        
+    @in_air.setter
+    def in_air(self, new_in_air: bool):
+        if isinstance(new_in_air, bool):
+            self.__in_air = new_in_air
+
+
+    @property
+    def flip(self):
+        return self.__flip
+        
+    @flip.setter
+    def flip(self, new_flip: bool):
+        if isinstance(new_flip, bool):
+            self.__flip = new_flip
+
+
+    @property
+    def in_slug(self):
+        return self.__in_slug
+        
+    @in_slug.setter
+    def in_slug(self, new_in_slug: bool):
+        if isinstance(new_in_slug, bool):
+            self.__in_slug = new_in_slug
+
+
+    @property
+    def is_human(self):
+        return self.__is_human
+        
+    @is_human.setter
+    def is_human(self, new_is_human: bool):
+        if isinstance(new_is_human, bool):
+            self.__is_human = new_is_human
+
+
+    @property
+    def lives(self):
+        return self.__lives
+        
+    @lives.setter
+    def lives(self, new_lives: int):
+        if isinstance(new_lives, int):
+            self.__lives = new_lives
+
+
+    @property
+    def moving_left(self):
+        return self.__moving_left
+        
+    @moving_left.setter
+    def moving_left(self, new_moving_left: bool):
+        if isinstance(new_moving_left, bool):
+            self.__moving_left = new_moving_left
+
+
+    @property
+    def moving_right(self):
+        return self.__moving_right
+        
+    @moving_right.setter
+    def moving_right(self, new_moving_right: bool):
+        if isinstance(new_moving_right, bool):
+            self.__moving_right = new_moving_right
+    
+
+    @property
+    def shooting(self):
+        return self.__shooting
+        
+    @shooting.setter
+    def shooting(self, new_shooting: bool):
+        if isinstance(new_shooting, bool):
+            self.__shooting = new_shooting
+    
+
+    @property
+    def throwing(self):
+        return self.__throwing
+        
+    @throwing.setter
+    def throwing(self, new_throwing: bool):
+        if isinstance(new_throwing, bool):
+            self.__throwing = new_throwing
+
+# End of getters and setters  
 
     def update(self):
         self.update_animation()
@@ -50,11 +250,11 @@ class PlayableCharacter(pygame.sprite.Sprite):
 
         #assign movement variables if moving left or right
         if self.moving_left:
-            dx = - self.speed
+            dx = - self.__speed
             self.flip = True
             self.direction = -1
         if self.moving_right:
-            dx = self.speed
+            dx = self.__speed
             self.flip = False
             self.direction = 1
         #jump
