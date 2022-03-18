@@ -40,11 +40,6 @@ class Mission():
         player, enemy_group, pickable_items_group = game_map.process_data()
         current_player = CurrentPlayer(player)
 
-        def health_bar(self):
-            self.health_bar = player.health
-            pygame.draw.rect(screen, (255,0,0), (10, 10, 300//2, 25))
-            pygame.draw.rect(screen, (0,255,0), (10, 10, (self.health//2)*3, 25))
-
         run = True
         while run:
 
@@ -53,7 +48,8 @@ class Mission():
         #   draw_map(tile_map)
             game_map.draw_bg(screen)
         #    game_map.draw(screen)
-            health_bar(player)
+            
+            player.health_bar(screen)
 
             player.update()
             player.draw(screen)
