@@ -18,6 +18,7 @@ class PlayableCharacter(pygame.sprite.Sprite):
         self.__health = 100
         self.__max_health = self.health
         self.__direction = 1
+        self.__direction_x = 0
         self.__vel_y = 0
         self.__jump = False
         self.__in_air = True
@@ -124,6 +125,16 @@ class PlayableCharacter(pygame.sprite.Sprite):
     def direction(self, new_direction: int):
         if isinstance(new_direction, int):
             self.__direction = new_direction
+    
+
+    @property
+    def direction_x(self):
+        return self.__direction_x
+        
+    @direction_x.setter
+    def direction_x(self, new_direction_x: int):
+        if isinstance(new_direction_x, int):
+            self.__direction_x = new_direction_x
 
 
     @property

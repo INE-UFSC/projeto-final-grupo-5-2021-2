@@ -7,6 +7,7 @@ from Bullet import bullet_group
 from Grenade import grenade_group
 from CurrentPlayer import CurrentPlayer
 
+
 screen_height = 600
 screen_width = 800
 screen_thresh = 200
@@ -15,9 +16,10 @@ bg_scroll = 0
 
 
 class Mission():
-    def __init__(self, level, volume=7):
+    def __init__(self, level, volume=5):
         self.level = level
         self.volume = volume
+        self.world_shift = 0
 
     def iniciar_partida(self):
         pygame.init()
@@ -61,17 +63,29 @@ class Mission():
         #   draw_map(tile_map)
             game_map.draw_bg(screen)
         #    game_map.draw(screen)
+            game_map.update_map(self.world_shift)
             
             player.health_bar(screen)
 
-            player.draw_hud(screen, f'{player.ammo}', font, YELLOW, 30, 50)
+            player.draw_hud(screen, f'{player.ammo}', font, YELLOW, 32, 50)
             player.draw_bullets(screen)
 
-            player.draw_hud(screen, f'{player.grenade}', font, YELLOW, 30, 82)
+            player.draw_hud(screen, f'{player.grenade}', font, YELLOW, 32, 82)
             player.draw_grenades(screen)
 
             player.update()
             player.draw(screen)
+            player_x = player.rect.centerx
+            direction_x = player.direction_x
+            if player_x < screen_width / 4 and direction_x < 0:
+                self.world_shift = 5
+                player.speed = 0
+            elif player_x > screen_width - (screen_width / 4) and direction_x > 0:
+                self.world_shift = -5
+                player.speed = 0
+            else:
+                self.world_shift = 0
+                player.speed = 5
 
             # controls if the current player is the slug or human
             if player.in_slug:
@@ -119,8 +133,10 @@ class Mission():
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_a:
                         player.moving_left = True
+                        player.direction_x = -1
                     if event.key == pygame.K_d:
                         player.moving_right = True
+                        player.direction_x = 1
                     if event.key == pygame.K_SPACE:
                         player.shooting = True
                     if event.key == pygame.K_q:
@@ -134,8 +150,10 @@ class Mission():
                 if event.type == pygame.KEYUP:
                     if event.key == pygame.K_a:
                         player.moving_left = False
+                        player.direction_x = 0
                     if event.key == pygame.K_d:
                         player.moving_right = False
+                        player.direction_x = 0
                     if event.key == pygame.K_SPACE:
                         player.shooting = False
                     if event.key == pygame.K_q:
