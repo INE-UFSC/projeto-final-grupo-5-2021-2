@@ -1,11 +1,21 @@
 from Slug import Slug
 from Marco import Marco
-
+from PlayableCharacter import PlayableCharacter
 
 class CurrentPlayer:
 
     def __init__(self, player):
-        self.player = player
+        self.__player = player
+    
+
+    @property
+    def player(self):
+        return self.__player
+    
+    @player.setter
+    def player(self, new_player: PlayableCharacter):
+        if isinstance(new_player, PlayableCharacter):
+            self.__player = new_player
 
     def enter_slug(self):
 
