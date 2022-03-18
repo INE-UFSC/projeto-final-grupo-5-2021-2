@@ -298,12 +298,14 @@ class PlayableCharacter(pygame.sprite.Sprite):
         self.rect.x += dx
         self.rect.y += dy
 
-    def shoot(self, bullet_group):
+    def shoot(self, bullet_group, volume):
         if self.shoot_cooldown == 0 and self.ammo > 0:
-#           self.update_action(1)
             self.shoot_cooldown = 20
             bullet = RegularBullet(self.rect.centerx + (0.6 * self.rect.size[0] * self.direction), self.rect.centery - 12, self.direction)
             bullet_group.add(bullet)
+            shooting = pygame.mixer.Sound('assets/sounds/gun_shot.mp3')
+            shooting.set_volume(volume)
+            shooting.play()
             #reduce ammo
             self.ammo -= 1
 

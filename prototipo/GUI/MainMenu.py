@@ -5,7 +5,7 @@ class MainMenu():
         self.window = Tk()
         self.container = container
         self.container_index = 0
-        self.volume_holder = 7
+        self.volume_holder = 0.3
 #        self.container = MainMenuContainer(self.window)
 
         #window geometry

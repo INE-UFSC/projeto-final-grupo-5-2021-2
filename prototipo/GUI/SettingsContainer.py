@@ -6,14 +6,14 @@ class SettingsContainer(Container):
         super().__init__(main_menu)
 
     def volume_down_click(self):
-        if self.main_menu.volume_holder >= 0: 
-            self.main_menu.volume_holder - 1
+        if self.main_menu.volume_holder > 0.1:
+            self.main_menu.volume_holder -= 0.1
         else:
             print("Volume já está no minimo")
 
     def volume_up_click(self):
-        if self.main_menu.volume_holder <= 10: 
-            self.main_menu.volume_holder + 1
+        if self.main_menu.volume_holder <= 1:
+            self.main_menu.volume_holder += 0.1
         else:
             print("Volume já está no máximo")
 

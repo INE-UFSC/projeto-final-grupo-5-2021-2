@@ -1,5 +1,4 @@
 import pygame
-from pygame import mixer
 from PlayableCharacter import PlayableCharacter
 from Enemy import Enemy
 from Map import Map
@@ -15,8 +14,8 @@ screen_scroll = 0
 bg_scroll = 0
 
 
-class Mission():
-    def __init__(self, level, volume=5):
+class Mission:
+    def __init__(self, level, volume=0.3):
         self.__level = level
         self.__volume = volume
         self.__world_shift = 0
@@ -58,8 +57,9 @@ class Mission():
         FPS = 60
 
         #background music
-        mixer.music.load('assets/sounds/bg_music.wav')
-        mixer.music.play(-1)
+        pygame.mixer.music.load('assets/sounds/bg_music.wav')
+        pygame.mixer.music.play(-1)
+        pygame.mixer.music.set_volume(self.volume)
 
         #game variables
         gravity = 0.75
@@ -142,7 +142,7 @@ class Mission():
             #update and draw groups
             bullet_group.update(player, bullet_group, enemy_group)
             bullet_group.draw(screen)
-            grenade_group.update(game_map, player, enemy_group)
+            grenade_group.update(game_map, player, enemy_group, self.volume)
             grenade_group.draw(screen)
             pickable_items_group.draw(screen)
             pickable_items_group.update(player)
@@ -151,7 +151,7 @@ class Mission():
             if player.alive:
                 if player.shooting:
                     player.update_action(1)
-                    player.shoot(bullet_group)
+                    player.shoot(bullet_group, self.volume)
                 elif player.throwing:
                     player.throw_grenade(grenade_group)
                 elif player.in_air:

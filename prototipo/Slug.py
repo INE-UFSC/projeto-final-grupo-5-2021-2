@@ -131,11 +131,14 @@ class Slug(PlayableCharacter, pygame.sprite.Sprite):
             img = pygame.image.load('assets/explosion1.png').convert_alpha()
             self.image = pygame.transform.scale(img, (100, 150))
 
-    def shoot(self, bullet_group):
+    def shoot(self, bullet_group, volume):
         if self.shoot_cooldown == 0 and self.ammo > 0:
             self.shoot_cooldown = 15
             bullet = SlugBullet(self.rect.centerx + (0.8 * self.rect.size[0] * self.direction), (self.rect.centery - 11), self.direction)
             bullet_group.add(bullet)
+            shooting = pygame.mixer.Sound('assets/sounds/gun_shot.mp3')
+            shooting.set_volume(volume)
+            shooting.play()
             # reduce ammo
             self.ammo -= 1
 

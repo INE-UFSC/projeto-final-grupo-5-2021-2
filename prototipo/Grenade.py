@@ -116,7 +116,7 @@ class Grenade(pygame.sprite.Sprite):
 
     # end of getters and setters
 
-    def update(self, game_map, player, enemy_group):
+    def update(self, game_map, player, enemy_group, volume):
         #move grenade
         if self.in_air:
             gravity = 0.75
@@ -130,7 +130,7 @@ class Grenade(pygame.sprite.Sprite):
                 self.dx = 0
                 self.dy = 0
                 self.in_air = False
-                self.explode(player, enemy_group)
+                self.explode(player, enemy_group, volume)
 
         # update grenade position
 
@@ -141,10 +141,15 @@ class Grenade(pygame.sprite.Sprite):
         if self.rect.right < 0 or self.rect.left > 800:
             self.kill()
 
-    def explode(self, player, enemy_group):
+    def explode(self, player, enemy_group, volume):
 
         self.image = explosion_animation[int(self.animation_index)]
         self.rect = self.image.get_rect(midbottom=self.rect.midbottom)
+
+        if self.animation_index == 0:
+            explosion = pygame.mixer.Sound('assets/sounds/explosion.mp3')
+            explosion.set_volume(volume)
+            explosion.play()
 
         if self.rect.colliderect(player.rect) and self.dmg_player is False:
             player.health -= 50
