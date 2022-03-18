@@ -1,4 +1,5 @@
 import pygame
+from pygame import mixer
 from PlayableCharacter import PlayableCharacter
 from Enemy import Enemy
 from map import Map
@@ -24,6 +25,10 @@ class Mission():
         #set FPSd
         clock = pygame.time.Clock()
         FPS = 60
+
+        #background music
+        mixer.music.load('assets/sounds/bg_music.wav')
+        mixer.music.play(-1)
 
         #game variables
         gravity = 0.75
