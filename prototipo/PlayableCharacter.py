@@ -287,6 +287,9 @@ class PlayableCharacter(pygame.sprite.Sprite):
         self.rect.x += dx
         self.rect.y += dy
 
+        #update scroll based on player position
+        #if self.rect.right > self.get_wid
+
     def shoot(self, bullet_group):
         if self.shoot_cooldown == 0 and self.ammo > 0:
 #           self.update_action(1)
@@ -318,9 +321,10 @@ class PlayableCharacter(pygame.sprite.Sprite):
     
     # displays player's ammo
     def draw_bullets(self, screen):
-        bullet_img = pygame.image.load('assets/bullet.png').convert_alpha()
+        bullet_img = pygame.image.load('assets/bullet_hud.png').convert_alpha()
+        bullet_img = pygame.transform.scale(bullet_img, (22, 22))
         for x in range(self.ammo):
-            screen.blit(bullet_img, (110 + (x*10), 60))
+            screen.blit(bullet_img, (110 + (x*10), 53))
     
     # displays player's grenade
     def draw_grenades(self, screen):

@@ -54,8 +54,10 @@ class Mission():
         #    game_map.draw(screen)
             
             player.health_bar(screen)
+
             player.draw_hud(screen, 'Ammo: ', font, WHITE, 10, 50)
             player.draw_bullets(screen)
+
             player.draw_hud(screen, 'Grenades: ', font, WHITE, 10, 82)
             player.draw_grenades(screen)
 
