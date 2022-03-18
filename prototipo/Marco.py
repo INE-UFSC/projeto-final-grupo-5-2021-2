@@ -1,8 +1,10 @@
-from turtle import speed
 import pygame
-import time
 from createAnimations import animation_list
 from PlayableCharacter import PlayableCharacter
+
+revive_1 = pygame.transform.scale(pygame.image.load('assets/reviving_1.png'), (75, 75))
+revive_2 = pygame.transform.scale(pygame.image.load('assets/reviving_2.png'), (75, 75))
+revive_sprite_list = [revive_1, revive_2, revive_1, revive_2]
 
 
 class Marco(PlayableCharacter, pygame.sprite.Sprite):
@@ -18,30 +20,35 @@ class Marco(PlayableCharacter, pygame.sprite.Sprite):
         self.width = self.image.get_width()
         self.height = self.image.get_height()
 
-        #player action variables
+        # player action variables
         self.sprite_index = 0
+        self.revive_index = 0
         self.action = 2
         self.animation_list = animation_list
         self.update_time = pygame.time.get_ticks()
         self.image = self.animation_list[self.action][self.sprite_index]
 
+
     def revive(self):
         if self.lives > 0:
-            self.alive = True
-            self.health = 100
-            self.speed = 5
-            img = pygame.image.load('assets/marco_rossi.png').convert_alpha()
-            self.image = pygame.transform.scale(img, (75, 75))
+            self.image = revive_sprite_list[int(self.revive_index)]
+            self.revive_index += 0.1
+            if self.revive_index >= len(revive_sprite_list):
+                self.revive_index = 0
+                self.alive = True
+                self.health = 100
+                self.speed = 5
+                self.lives -= 1
+                img = pygame.image.load('assets/marco_rossi.png').convert_alpha()
+                self.image = pygame.transform.scale(img, (75, 75))
         else:
             pygame.sprite.Sprite.kill(self)
-
 
     def check_alive(self):
         if self.health <= 0:
             self.health = 0
             self.speed = 0
             self.alive = False
-            self.lives -= 1
             img = pygame.image.load('assets/marco_rossi_dead.png').convert_alpha()
             self.image = pygame.transform.scale(img, (75, 75))
             self.revive()
