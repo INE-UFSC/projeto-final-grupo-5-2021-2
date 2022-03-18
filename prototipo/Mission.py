@@ -7,6 +7,7 @@ from CurrentPlayer import CurrentPlayer
 screen_height = 600
 screen_width = 800
 
+
 class Mission():
     def __init__(self, level, volume=7):
         self.level = level
@@ -32,11 +33,6 @@ class Mission():
         player, enemy_group, pickable_items_group = game_map.process_data()
         current_player = CurrentPlayer(player)
 
-        def health_bar(self):
-            self.health_bar = player.health
-            pygame.draw.rect(screen, (255,0,0), (10, 10, 300//2, 25))
-            pygame.draw.rect(screen, (0,255,0), (10, 10, (self.health//2)*3, 25))
-
         run = True
         while run:
 
@@ -45,7 +41,8 @@ class Mission():
         #   draw_map(tile_map)
             game_map.draw_bg(screen)
         #    game_map.draw(screen)
-            health_bar(player)
+            
+            player.health_bar(screen)
 
             player.update()
             player.draw(screen)
@@ -83,8 +80,6 @@ class Mission():
                     player.throw_grenade(grenade_group)
                 elif player.in_air:
                     player.update_action(0)#2: jump
-#              elif player.moving_left or player.moving_right:
-#                   player.update_action()#1: run
                 else:
                     player.update_action(2)#0: idle
                 player.move(game_map)

@@ -1,5 +1,7 @@
 import pygame
 from Slug import Slug
+
+
 class PickableItem(pygame.sprite.Sprite):
     def __init__(self, type, x, y, tile_size):
         pygame.sprite.Sprite.__init__(self)
