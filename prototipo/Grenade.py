@@ -19,20 +19,102 @@ class Grenade(pygame.sprite.Sprite):
 
     def __init__(self, x, y, direction):
         pygame.sprite.Sprite.__init__(self)
-        self.timer = 75
-        self.speed_y = -10
-        self.speed_x = 7
+        self.__speed_y = -10
+        self.__speed_x = 7
         self.image = grenade_img
         self.rect = self.image.get_rect()
         self.rect.center = (x, y)
-        self.direction = direction
-        self.width = self.image.get_width()
-        self.height = self.image.get_height()
-        self.dx = 0
-        self.dy = 0
-        self.dmg_player = False
-        self.in_air = True
-        self.animation_index = 0
+        self.__direction = direction
+        self.__width = self.image.get_width()
+        self.__height = self.image.get_height()
+        self.__dx = 0
+        self.__dy = 0
+        self.__dmg_player = False
+        self.__in_air = True
+        self.__animation_index = 0
+
+    # getters and setters
+    @property
+    def speed_y(self):
+        return self.__speed_y
+
+    @speed_y.setter
+    def speed_y(self, new_speed_y):
+        self.__speed_y = new_speed_y
+
+    @property
+    def speed_x(self):
+        return self.__speed_x
+
+    @speed_x.setter
+    def speed_x(self, new_speed_x):
+        self.__speed_x = new_speed_x
+
+    @property
+    def direction(self):
+        return self.__direction
+
+    @direction.setter
+    def direction(self, new_direction):
+        self.__direction = new_direction
+
+    @property
+    def width(self):
+        return self.__width
+
+    @width.setter
+    def width(self, new_width):
+        self.__width = new_width
+
+    @property
+    def height(self):
+        return self.__height
+
+    @height.setter
+    def height(self, new_height):
+        self.__height = new_height
+
+    @property
+    def dx(self):
+        return self.__dx
+
+    @dx.setter
+    def dx(self, new_dx):
+        self.__dx = new_dx
+
+    @property
+    def dy(self):
+        return self.__dy
+
+    @dy.setter
+    def dy(self, new_dy):
+        self.__dy = new_dy
+
+    @property
+    def dmg_player(self):
+        return self.__dmg_player
+
+    @dmg_player.setter
+    def dmg_player(self, new_dmg_player):
+        self.__dmg_player = new_dmg_player
+
+    @property
+    def in_air(self):
+        return self.__in_air
+
+    @in_air.setter
+    def in_air(self, new_in_air):
+        self.__in_air = new_in_air
+
+    @property
+    def animation_index(self):
+        return self.__animation_index
+
+    @animation_index.setter
+    def animation_index(self, new_animation_index):
+        self.__animation_index = new_animation_index
+
+    # end of getters and setters
 
     def update(self, game_map, player, enemy_group):
         #move grenade
@@ -70,7 +152,7 @@ class Grenade(pygame.sprite.Sprite):
 
         for enemy in enemy_group:
             if self.rect.colliderect(enemy.rect):
-                enemy.health -= 100
+                enemy.health -= 0.5
 
         self.animation_index += 0.04
 
