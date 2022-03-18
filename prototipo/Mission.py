@@ -55,6 +55,7 @@ class Mission():
             
             player.health_bar(screen)
             player.draw_hud(screen, 'Ammo: ', font, WHITE, 10, 50)
+            player.draw_bullets(screen)
 
             player.update()
             player.draw(screen)

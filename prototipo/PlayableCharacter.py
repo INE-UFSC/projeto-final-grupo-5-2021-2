@@ -316,6 +316,12 @@ class PlayableCharacter(pygame.sprite.Sprite):
         hud = font.render(text, True, text_col)
         screen.blit(hud, (x, y))
     
+    # displays player's ammo
+    def draw_bullets(self, screen):
+        bullet_img = pygame.image.load('assets/bullet.png').convert_alpha()
+        for x in range(self.ammo):
+            screen.blit(bullet_img, (110 + (x*10), 60))
+    
     def check_alive(self):
         if self.health <= 0:
             self.health = 0
