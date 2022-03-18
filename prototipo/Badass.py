@@ -14,6 +14,14 @@ class Badass(Enemy, pygame.sprite.Sprite):
         self.rect.center = (x, y)
         self.width = self.image.get_width()
         self.height = self.image.get_height()
+    
+    @property
+    def width(self):
+        return self.__width
+
+    @property
+    def height(self):
+        return self.__height
 
     def check_alive(self):
         if self.health <= 0:
