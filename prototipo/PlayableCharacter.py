@@ -105,6 +105,11 @@ class PlayableCharacter(pygame.sprite.Sprite):
             #reduce grenade
             self.grenade -= 1
 
+    # displays player's health bar
+    def health_bar(self, screen):
+        pygame.draw.rect(screen, (255,0,0), (10, 10, 300//2, 25))
+        pygame.draw.rect(screen, (0,255,0), (10, 10, (self.health//2)*3, 25))
+    
     def check_alive(self):
         if self.health <= 0:
             self.health = 0
