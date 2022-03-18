@@ -25,7 +25,6 @@ class Slug(PlayableCharacter, pygame.sprite.Sprite):
 
         # slug stats
         self.__alive = True
-        self.__health = 100
         self.__in_slug = False
         self.__is_human = False
 
@@ -48,55 +47,31 @@ class Slug(PlayableCharacter, pygame.sprite.Sprite):
     def player_health(self):
         return self.__player_health
     
-    @player_health.setter
-    def player_health(self, new_player_health: int):
-        if isinstance(new_player_health, int):
-            self.__player_health = new_player_health  
-
     @property
     def player_ammo(self):
         return self.__player_ammo
-        
-    @player_ammo.setter
-    def player_ammo(self, new_player_ammo: int):
-        if isinstance(new_player_ammo, int):
-            self.__player_ammo = new_player_ammo
     
     @property
     def player_grenade(self):
         return self.__player_grenade
     
-    @player_grenade.setter
-    def player_grenade(self, new_player_grenade: int):
-        if isinstance(new_player_grenade, int):
-            self.__player_grenade = new_player_grenade 
-
     @property
     def player_speed(self):
         return self.__player_speed
     
-    @player_speed.setter
-    def player_speed(self, new_player_speed: float):
-        self.__player_speed = new_player_speed
-    
     @property
     def lives(self):
         return self.__lives
-    
-    @lives.setter
-    def lives(self, new_lives: int):
-        if isinstance(new_lives, int):
-            self.__lives = new_lives
-    
+       
     @property
     def alive(self):
         return self.__alive
-        
+    
     @alive.setter
     def alive(self, new_alive: bool):
         if isinstance(new_alive, bool):
             self.__alive = new_alive
-     
+    
     @property
     def in_slug(self):
         return self.__in_slug
@@ -105,7 +80,6 @@ class Slug(PlayableCharacter, pygame.sprite.Sprite):
     def in_slug(self, new_in_slug: bool):
         if isinstance(new_in_slug, bool):
             self.__in_slug = new_in_slug
-
 
     @property
     def is_human(self):
@@ -133,16 +107,11 @@ class Slug(PlayableCharacter, pygame.sprite.Sprite):
     def action(self, new_action: int):
         if isinstance(new_action, int):
             self.__action = new_action
-    
+
     @property
     def animation_list(self):
         return self.__animation_list
-        
-    @animation_list.setter
-    def animation_list(self, new_animation_list: int):
-        if isinstance(new_animation_list, int):
-            self.__animation_list = new_animation_list
-    
+           
     @property
     def update_time(self):
         return self.__update_time
