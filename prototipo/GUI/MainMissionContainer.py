@@ -12,7 +12,7 @@ class MainMissionContainer(Container):
     def easy_button_click(self):
         mission = Mission(0, self.main_menu.volume_holder)
         self.window.destroy()
-        mission.iniciar_partida()
+        mission.start_mission()
 
     def show_menu(self):
         canvas = Canvas(self.window,

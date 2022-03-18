@@ -21,6 +21,9 @@ path_list.append(standing)
 throwing_bomb = Animations(f'{actions_path}/throwing_bomb')
 path_list.append(throwing_bomb)
 
+running = Animations(f'{actions_path}/running')
+path_list.append(running)
+
 slug_jumping = Animations(f'{actions_path}/slug_jumping')
 slug_path_list.append(slug_jumping)
 

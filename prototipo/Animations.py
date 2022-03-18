@@ -18,5 +18,5 @@ class Animations():
     def create_sprites(self):
         for i in range(self.files_number):
             img = pygame.image.load(f'{self.path}/{i}.png')
-            img = pygame.transform.scale(img, (int(img.get_width() * 2), int(img.get_height() * 2)))
+            img = pygame.transform.scale(img, (int(img.get_width() * 1.2), int(img.get_height() * 1.2)))
             self.img_list.append(img)
