@@ -59,8 +59,8 @@ class Map:
                 elif tile == 4:  # create grenade box
                     pickable_item = PickableItem('Grenade', x * self.tile_size, y * self.tile_size, self.tile_size)
                     pickable_items_group.add(pickable_item)
-                elif tile == 5:
-                    pickable_item = PickableItem('Slug', x * self.tile_size, y * self.tile_size, self.tile_size)
+                elif tile == 5: #create slug
+                    pickable_item = PickableItem('Slug', (self.screen_width - self.screen_width / 4), y * self.tile_size, self.tile_size)
                     pickable_items_group.add(pickable_item)
                 elif tile == 6:  # create tank enemies
                     enemy = Tank(600, 200, 2, 50)
