@@ -1,6 +1,6 @@
 import pygame
 from Grenade import Grenade
-from SlugBullet import SlugBullet
+from Bullet import Bullet
 from PlayableCharacter import PlayableCharacter
 from createAnimations import slug_animation_list
 
@@ -48,9 +48,9 @@ class Slug(PlayableCharacter, pygame.sprite.Sprite):
     def shoot(self, bullet_group):
         if self.shoot_cooldown == 0 and self.ammo > 0:
             self.shoot_cooldown = 15
-            bullet = SlugBullet(self.rect.centerx + (0.8 * self.rect.size[0] * self.direction), (self.rect.centery - 11), self.direction)
+            bullet = Bullet(self.rect.centerx + (0.8 * self.rect.size[0] * self.direction), (self.rect.centery - 11), self.direction, 'slug')
             bullet_group.add(bullet)
-            # reduce ammo
+            #reduce ammo
             self.ammo -= 1
 
     def throw_grenade(self, grenade_group):

@@ -1,6 +1,6 @@
 import pygame
 from Enemy import Enemy
-from SlugBullet import SlugBullet
+from Bullet import Bullet
 
 exp_fr_1 = pygame.image.load('assets/tank_exp/exp_fr1.png')
 exp_fr_2 = pygame.image.load('assets/tank_exp/exp_fr2.png')
@@ -42,7 +42,7 @@ class Tank(Enemy, pygame.sprite.Sprite):
     def shoot(self, bullet_group):
         if self.shoot_cooldown == 0 and self.ammo > 0:
             self.shoot_cooldown = 20
-            bullet = SlugBullet(self.rect.centerx + (0.9 * self.rect.size[0] * self.direction), self.rect.centery - 20, self.direction)
+            bullet = Bullet(self.rect.centerx + (0.9 * self.rect.size[0] * self.direction), self.rect.centery - 20, self.direction, 'slug')
             bullet.enemy = True
             bullet_group.add(bullet)
             # reduce ammo

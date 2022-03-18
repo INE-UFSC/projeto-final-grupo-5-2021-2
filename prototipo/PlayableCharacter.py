@@ -1,8 +1,7 @@
 import pygame
-from RegularBullet import RegularBullet
+from Bullet import Bullet
 from Grenade import Grenade
 from abc import abstractmethod
-
 
 class PlayableCharacter(pygame.sprite.Sprite):
     def __init__(self, x, y, speed, ammo, grenade):
@@ -31,6 +30,7 @@ class PlayableCharacter(pygame.sprite.Sprite):
         self.moving_right = False
         self.shooting = False
         self.throwing = False
+
 
         #load all images for the players
         self.width = None
@@ -62,6 +62,7 @@ class PlayableCharacter(pygame.sprite.Sprite):
             self.vel_y = -11
             self.jump = False
             self.in_air = True
+#            self.update_action(0)
 
         #apply gravity
         self.vel_y += 0.75
@@ -82,16 +83,15 @@ class PlayableCharacter(pygame.sprite.Sprite):
                     self.vel_y = 0
                     self.in_air = False
                     dy = tile[1].top - self.rect.bottom
-                    
         #update rectangle position
         self.rect.x += dx
         self.rect.y += dy
 
     def shoot(self, bullet_group):
         if self.shoot_cooldown == 0 and self.ammo > 0:
-#           self.update_action(1)
+#            self.update_action(1)
             self.shoot_cooldown = 20
-            bullet = RegularBullet(self.rect.centerx + (0.6 * self.rect.size[0] * self.direction), self.rect.centery, self.direction)
+            bullet = Bullet(self.rect.centerx + (0.6 * self.rect.size[0] * self.direction), self.rect.centery, self.direction, 'human')
             bullet_group.add(bullet)
             #reduce ammo
             self.ammo -= 1
@@ -105,11 +105,6 @@ class PlayableCharacter(pygame.sprite.Sprite):
             #reduce grenade
             self.grenade -= 1
 
-    # displays player's health bar
-    def health_bar(self, screen):
-        pygame.draw.rect(screen, (255,0,0), (10, 10, 300//2, 25))
-        pygame.draw.rect(screen, (0,255,0), (10, 10, (self.health//2)*3, 25))
-    
     def check_alive(self):
         if self.health <= 0:
             self.health = 0

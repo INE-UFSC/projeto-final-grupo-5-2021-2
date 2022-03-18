@@ -1,7 +1,6 @@
 import pygame
 import random
-from Bullet import bullet_group
-from RegularBullet import RegularBullet
+from Bullet import Bullet, bullet_group
 
 
 class Enemy(pygame.sprite.Sprite):
@@ -47,7 +46,7 @@ class Enemy(pygame.sprite.Sprite):
     def shoot(self, bullet_group):
         if self.shoot_cooldown == 0 and self.ammo > 0:
             self.shoot_cooldown = 20
-            bullet = RegularBullet(self.rect.centerx + (0.6 * self.rect.size[0] * self.direction), self.rect.centery, self.direction)
+            bullet = Bullet(self.rect.centerx + (0.6 * self.rect.size[0] * self.direction), self.rect.centery, self.direction, 'human')
             bullet.enemy = True
             bullet_group.add(bullet)
             # reduce ammo
@@ -136,3 +135,5 @@ class Enemy(pygame.sprite.Sprite):
             self.death_counter += 1
         if self.death_counter >= 45:
             self.kill()
+
+
