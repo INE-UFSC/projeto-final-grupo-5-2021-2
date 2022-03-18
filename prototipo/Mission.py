@@ -9,6 +9,9 @@ from CurrentPlayer import CurrentPlayer
 
 screen_height = 600
 screen_width = 800
+screen_thresh = 200
+screen_scroll = 0
+bg_scroll = 0
 
 
 class Mission():
@@ -36,11 +39,12 @@ class Mission():
         #define colors
         BG = (144, 201, 120)
         RED = (255, 0, 0)
+        YELLOW = (255,233,0)
         BROWN = (110, 38, 14)
         WHITE = (255, 255, 255)
 
         #define font
-        font = pygame.font.SysFont('Fontana', 40)
+        font = pygame.font.Font('assets/Pixeltype.ttf', 50)
      
         game_map = Map(self.level, 'background_1', screen_height, screen_width, 16, 150)
         #player = PlayableCharacter(200, 200, 5, 20, 5)
@@ -60,10 +64,10 @@ class Mission():
             
             player.health_bar(screen)
 
-            player.draw_hud(screen, 'Ammo: ', font, WHITE, 10, 50)
+            player.draw_hud(screen, f'{player.ammo}', font, YELLOW, 30, 50)
             player.draw_bullets(screen)
 
-            player.draw_hud(screen, 'Grenades: ', font, WHITE, 10, 82)
+            player.draw_hud(screen, f'{player.grenade}', font, YELLOW, 30, 82)
             player.draw_grenades(screen)
 
             player.update()
