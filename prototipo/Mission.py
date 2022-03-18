@@ -78,6 +78,12 @@ class Mission():
             player.draw(screen)
             player_x = player.rect.centerx
             direction_x = player.direction_x
+
+            if player.moving_left:
+                player.direction_x = -1
+            if player.moving_right:
+                player.direction_x = 1
+
             if player_x < screen_width / 5 and direction_x < 0:
                 self.world_shift = 5
                 player.speed = 0
@@ -134,10 +140,8 @@ class Mission():
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_a:
                         player.moving_left = True
-                        player.direction_x = -1
                     if event.key == pygame.K_d:
                         player.moving_right = True
-                        player.direction_x = 1
                     if event.key == pygame.K_SPACE:
                         player.shooting = True
                     if event.key == pygame.K_q:
