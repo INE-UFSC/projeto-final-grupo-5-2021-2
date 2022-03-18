@@ -311,6 +311,11 @@ class PlayableCharacter(pygame.sprite.Sprite):
         pygame.draw.rect(screen, (255,0,0), (10, 10, 300//2, 25))
         pygame.draw.rect(screen, (0,255,0), (10, 10, (self.health//2)*3, 25))
     
+    # displays player's text hud
+    def draw_hud(self, screen, text, font, text_col, x, y):
+        hud = font.render(text, True, text_col)
+        screen.blit(hud, (x, y))
+    
     def check_alive(self):
         if self.health <= 0:
             self.health = 0

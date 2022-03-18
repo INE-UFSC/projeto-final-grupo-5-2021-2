@@ -32,6 +32,10 @@ class Mission():
         BG = (144, 201, 120)
         RED = (255, 0, 0)
         BROWN = (110, 38, 14)
+        WHITE = (255, 255, 255)
+
+        #define font
+        font = pygame.font.SysFont('Fontana', 40)
      
         game_map = Map(self.level, 'background_1', screen_height, screen_width, 16, 150)
         #player = PlayableCharacter(200, 200, 5, 20, 5)
@@ -50,6 +54,7 @@ class Mission():
         #    game_map.draw(screen)
             
             player.health_bar(screen)
+            player.draw_hud(screen, 'Ammo: ', font, WHITE, 10, 50)
 
             player.update()
             player.draw(screen)
