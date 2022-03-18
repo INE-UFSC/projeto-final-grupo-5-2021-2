@@ -30,7 +30,7 @@ class PickableItem(pygame.sprite.Sprite):
 
 # End of getters and setters
 
-    def update(self, player):
+    def update(self, player, screen_scroll):
         if pygame.sprite.collide_rect(self, player):
             if self.type == 'Ammo':
                 player.ammo += 15
@@ -39,3 +39,4 @@ class PickableItem(pygame.sprite.Sprite):
             elif self.type == 'Slug':
                 player.in_slug = True
             self.kill()
+        self.rect.x += screen_scroll
