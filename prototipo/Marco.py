@@ -17,16 +17,64 @@ class Marco(PlayableCharacter, pygame.sprite.Sprite):
         self.image = pygame.transform.scale(img, (75, 75))
         self.rect = self.image.get_rect()
         self.rect.center = (x, y)
-        self.width = self.image.get_width()
-        self.height = self.image.get_height()
+        self.__width = self.image.get_width()
+        self.__height = self.image.get_height()
 
         # player action variables
-        self.sprite_index = 0
-        self.revive_index = 0
-        self.action = 2
-        self.animation_list = animation_list
-        self.update_time = pygame.time.get_ticks()
+        self.__sprite_index = 0
+        self.__revive_index = 0
+        self.__action = 2
+        self.__animation_list = animation_list
+        self.__update_time = pygame.time.get_ticks()
         self.image = self.animation_list[self.action][self.sprite_index]
+    
+    @property
+    def width(self):
+        return self.__width
+        
+    @property
+    def height(self):
+        return self.__height
+
+    @property
+    def sprite_index(self):
+        return self.__sprite_index
+        
+    @sprite_index.setter
+    def sprite_index(self, new_sprite_index: int):
+        if isinstance(new_sprite_index, int):
+            self.__sprite_index = new_sprite_index
+    
+    @property
+    def revive_index(self):
+        return self.__revive_index
+        
+    @revive_index.setter
+    def revive_index(self, new_revive_index: int):
+        self.__revive_index = new_revive_index
+    
+    @property
+    def action(self):
+        return self.__action
+        
+    @action.setter
+    def action(self, new_action: int):
+        if isinstance(new_action, int):
+            self.__action = new_action
+
+    @property
+    def animation_list(self):
+        return self.__animation_list
+           
+    @property
+    def update_time(self):
+        return self.__update_time
+        
+    @update_time.setter
+    def update_time(self, new_update_time: int):
+        self.__update_time = new_update_time
+
+# End of getters and setters
 
     def revive(self):
         if self.lives > 0:
