@@ -136,5 +136,3 @@ class Enemy(pygame.sprite.Sprite):
             self.death_counter += 1
         if self.death_counter >= 45:
             self.kill()
-
-

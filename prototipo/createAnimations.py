@@ -1,4 +1,3 @@
-
 from Animations import Animations
 
 animation_list = []

@@ -32,7 +32,6 @@ class PlayableCharacter(pygame.sprite.Sprite):
         self.shooting = False
         self.throwing = False
 
-
         #load all images for the players
         self.width = None
         self.height = None
@@ -63,7 +62,6 @@ class PlayableCharacter(pygame.sprite.Sprite):
             self.vel_y = -11
             self.jump = False
             self.in_air = True
-#            self.update_action(0)
 
         #apply gravity
         self.vel_y += 0.75
@@ -84,6 +82,7 @@ class PlayableCharacter(pygame.sprite.Sprite):
                     self.vel_y = 0
                     self.in_air = False
                     dy = tile[1].top - self.rect.bottom
+                    
         #update rectangle position
         self.rect.x += dx
         self.rect.y += dy
