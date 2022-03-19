@@ -46,7 +46,7 @@ class Bullet(pygame.sprite.Sprite):
 
 # End of getters and setters
 
-    def update(self, player, bullet_group, enemy_group, screen_scroll):
+    def update(self, player, bullet_group, enemy_group, screen_scroll, level):
         # move bullet
         self.rect.x += (self.direction * self.speed) + screen_scroll
 
@@ -56,7 +56,7 @@ class Bullet(pygame.sprite.Sprite):
 
         if pygame.sprite.spritecollide(player, bullet_group, False):
             if player.alive and self.enemy:
-                player.health -= 5
+                player.health -= 5 * level
                 self.kill()
 
         for enemy in enemy_group:
