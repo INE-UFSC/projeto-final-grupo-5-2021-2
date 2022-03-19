@@ -2,6 +2,7 @@ from Marco import Marco
 from Rebel import Rebel
 from Tank import Tank
 from Badass import Badass
+from Boss import Boss
 import pygame
 import csv
 from PickableItem import PickableItem
@@ -165,7 +166,9 @@ class Map:
                 elif tile == 7:  # create badass enemies
                     enemyB = Badass(x * self.tile_size, y * self.tile_size, 2, 50)
                     enemy_group.add(enemyB)
-
+                elif tile == 8: # create Boss
+                    enemy_boss = Boss(x * self.tile_size, y * self.tile_size, 2, 100)
+                    enemy_group.add(enemy_boss)
         return player, enemy_group, pickable_items_group
 
     # method for tile scroll
