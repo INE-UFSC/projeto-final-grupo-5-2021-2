@@ -10,7 +10,17 @@ class MainMissionContainer(Container):
         self.main_menu.main_menu_view()
 
     def easy_button_click(self):
-        mission = Mission(0, self.main_menu.volume_holder)
+        mission = Mission(1, self.main_menu.volume_holder)
+        self.window.destroy()
+        mission.iniciar_partida()
+
+    def medium_button_click(self):
+        mission = Mission(2, self.main_menu.volume_holder)
+        self.window.destroy()
+        mission.iniciar_partida()
+
+    def hard_button_click(self):
+        mission = Mission(3, self.main_menu.volume_holder)
         self.window.destroy()
         mission.iniciar_partida()
 
@@ -33,7 +43,7 @@ class MainMissionContainer(Container):
         hard_button = Button(   image=hard_button_image,
                                 borderwidth=0,
                                 highlightthickness=0,
-                                command=lambda: print("hard level"),
+                                command=lambda: self.hard_button_click(),
                                 relief="flat")
 
         hard_button.place(  x=527.0,
@@ -56,7 +66,7 @@ class MainMissionContainer(Container):
         medium_button = Button( image=medium_button_image,
                                 borderwidth=0,
                                 highlightthickness=0,
-                                command=lambda: self.go_back_button_click(),
+                                command=lambda: self.medium_button_click(),
                                 relief="flat")
         medium_button.place(x=527.0,
                             y=360.0,
