@@ -100,7 +100,7 @@ class Marco(PlayableCharacter, pygame.sprite.Sprite):
             self.image = pygame.transform.scale(img, (75, 75))
             self.revive()
         else:
-            pass
+            print('game over!')
 
 
     def update_animation(self):
