@@ -89,7 +89,7 @@ class Marco(PlayableCharacter, pygame.sprite.Sprite):
                 img = pygame.image.load('assets/marco_rossi.png').convert_alpha()
                 self.image = pygame.transform.scale(img, (75, 75))
         else:
-            pygame.sprite.Sprite.kill(self)
+            print('game over!')
 
     def check_alive(self):
         if self.health <= 0:
@@ -100,7 +100,7 @@ class Marco(PlayableCharacter, pygame.sprite.Sprite):
             self.image = pygame.transform.scale(img, (75, 75))
             self.revive()
         else:
-            print('game over!')
+            pass
 
 
     def update_animation(self):
